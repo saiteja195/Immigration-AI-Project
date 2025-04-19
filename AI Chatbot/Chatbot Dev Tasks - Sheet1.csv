@@ -1,0 +1,29 @@
+Task,Feature,Description,Status
+Setup project repository and folder structure,Project Setup,"Create a well-organized project scaffold with separate folders for FastAPI backend, LangChain RAG logic, DB utils, and vector index logic.",Backlog
+Configure .env and install dependencies,Project Setup,"Create .env for secrets (Mongo URI, Pinecone, OpenAI) and install necessary packages like FastAPI, LangChain, Pinecone, Motor, Pydantic, etc.",Backlog
+Build FastAPI boilerplate with health check route,Project Setup,Create a simple FastAPI app with a /health endpoint to verify the server is running.,Backlog
+"Design MongoDB/DynamoDB schema for users, sessions, messages",Chat & Session,"Define schema or collections for user profiles, chat sessions, and messages with proper timestamp and session grouping.",Backlog
+Implement POST /start_session to initiate user sessions,Chat & Session,"Create an API route that starts a new chat session, saving user ID and start time.",Backlog
+Implement POST /chat endpoint to accept and respond to messages,Chat & Session,"Accept user input and return a placeholder response. Later, wire it to the RAG engine.",Backlog
+Store chat messages (user + bot) in the DB,Chat & Session,Ensure every message exchanged is stored in the appropriate session with metadata.,Backlog
+Implement GET /sessions/{user_id} to fetch session history,Chat & Session,Create an endpoint to fetch previous chat sessions with timestamps and summaries.,Backlog
+Setup LangChain with OpenAI and test static prompt,LangChain RAG,Initialize LangChain with GPT-4 or Claude and test static message flow before adding RAG.,Backlog
+Load immigration documents and chunk using LangChain,LangChain RAG,"Load PDFs, websites, or text, and split them into chunks using RecursiveCharacterSplitter or similar.",Backlog
+Create Pinecone index and embed immigration knowledge,LangChain RAG,Use OpenAI or Instructor embeddings to store chunks in Pinecone for retrieval.,Backlog
+Build retriever logic with Pinecone for relevant chunk fetching,LangChain RAG,Use LangChain retriever to query Pinecone and return top-k relevant documents.,Backlog
+Build RAG chain: query → retrieve → prompt → response,LangChain RAG,"Integrate retriever with LLM and LangChain QA chain to return grounded, relevant answers.",Backlog
+Connect /chat endpoint with full RAG response pipeline,LangChain RAG,Wire the user input to go through the RAG pipeline and return an enriched answer.,Backlog
+"Fetch USCIS, SEVP, ICE RSS feeds",Real-Time,Use feedparser or requests to fetch live immigration feeds from .gov sites.,Backlog
+Summarize immigration headlines using LLM,Real-Time,Use map-reduce or stuff chain summarization to distill multiple news articles.,Backlog
+Build GET /news to expose summarized news,Real-Time,Expose an endpoint returning recent summaries for frontend display.,Backlog
+Enable real-time news detection from user queries,Real-Time,Use keyword or intent detection to dynamically fetch and summarize breaking immigration news.,Backlog
+Create visa-type-based rules for auto task generation,Task Engine,"Write rule logic based on visa type (e.g., F-1 = update SEVIS in 10 days of move).",Backlog
+Implement task generation logic and DB schema,Task Engine,Store user-specific task deadlines and status. Auto-generate based on profile.,Backlog
+Set up deadline-based reminders (cron/email placeholders),Task Engine,Build a task scheduler (CRON job or Celery) to trigger reminders for pending compliance tasks.,Backlog
+"Write unit tests for APIs, DB writes, RAG",Testing & Deployment,"Use pytest to ensure endpoints, session logic, and RAG return as expected.",Backlog
+Dockerize the app for production deployment,Testing & Deployment,Create a Dockerfile for the FastAPI app and ensure local builds work.,Backlog
+Deploy to AWS/GCP (EC2 or Cloud Run),Testing & Deployment,Host the bot backend on the cloud and expose via API Gateway or public IP.,Backlog
+Add logging + error tracking (Sentry or built-in logs),Testing & Deployment,Use standard logging or error monitoring to trace and debug production issues.,Backlog
+Add JWT user authentication + auth middleware,Security,"Implement secure login and attach auth to protected routes like /chat, /news.",Backlog
+Add user memory (remember visa type in session),Security,Store current visa and country in session metadata to personalize responses.,Backlog
+Add disclaimer to bot for legal compliance,Security,Every response should include a line like “This is not legal advice” when relevant.,Backlog
