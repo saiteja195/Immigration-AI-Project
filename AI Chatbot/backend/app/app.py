@@ -8,7 +8,7 @@ import logging
 load_dotenv()
 template_path = os.path.abspath('../frontend/templates')
 print(f"Resolved template path: {template_path}")
-app = Flask(__name__, template_folder='../../frontend/templates', static_folder='../../frontend/static')
+app = Flask(__name__, template_folder='./frontend/templates', static_folder='./frontend/static')
 
 app.secret_key = os.getenv("FLASK_SECRET_KEY", secrets.token_hex(16))
 

@@ -3,3 +3,4 @@ langchain-core
 langchain-community
 python-dotenv
 openai
+Flask
