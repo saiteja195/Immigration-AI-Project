@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immigration AI Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>Immigration AI</h1>
+            <p>Your assistant for immigration questions</p>
+            <button id="clear-chat-button">Clear Chat</button>
+        </div>
+        <div id="chat-box" class="chat-box">
+            <!-- Chat messages will be appended here -->
+            <div class="message bot-message">
+                <p>Welcome! How can I help you with your immigration questions today?</p>
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <textarea id="user-input" placeholder="Type your message here..." rows="3"></textarea>
+            <button id="send-button">Send</button>
+        </div>
+         <div id="loading-indicator" style="display: none; text-align: center; padding: 10px;">
+            <div class="spinner"></div>
+            <p>Thinking...</p>
+        </div>
+        <div id="error-message" class="error-message" style="display: none;"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html> 
