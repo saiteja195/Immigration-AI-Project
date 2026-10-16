@@ -1,0 +1,13 @@
+id: ssn
+title: Apply for a Social Security Number
+description: Only people with work authorization can get an SSN. F-1 students need a job offer or on-campus work. H-4 without an EAD is usually not eligible.
+applies_to: [F-1, F-1 OPT, F-1 STEM OPT, H-1B, H-4 EAD]
+last_verified: 2026-10-16
+sources:
+  - {name: "SSA - Social Security Number", url: "https://www.ssa.gov"}
+steps:
+  - {title: "Confirm you are eligible", details: "You need current work authorization (H-1B, OPT/STEM OPT EAD, H-4 EAD, or on-campus job for F-1).", due_in_days: 0}
+  - {title: "Wait for your status to show in the system", details: "After arrival, SSA may need a few days to see your record. Check the SSA site for the current advice.", due_in_days: 10}
+  - {title: "Gather documents", details: "Passport, visa, I-94, and I-20 / I-797 / EAD. F-1 students also need a letter from the DSO and the employer.", due_in_days: 10, required_docs: ["Passport", "I-94", "I-20 / I-797 / EAD", "Employer or DSO letter (F-1)"]}
+  - {title: "Apply at the SSA office", details: "Fill in Form SS-5 and submit the documents in person.", due_in_days: 14}
+  - {title: "Receive your SSN card by mail", details: "It usually arrives in 1 to 2 weeks. Keep the card safe.", due_in_days: 28}

@@ -1,0 +1,15 @@
+id: stem_opt
+title: Apply for STEM OPT extension
+description: 24-month extension for STEM degree holders. Apply before your current OPT EAD expires.
+applies_to: [F-1 OPT]
+last_verified: 2026-10-16
+sources:
+  - {name: "USCIS - I-765", url: "https://www.uscis.gov/i-765"}
+  - {name: "Study in the States - STEM OPT", url: "https://studyinthestates.dhs.gov"}
+steps:
+  - {title: "Confirm your employer uses E-Verify", details: "The employer must be enrolled in E-Verify.", due_in_days: 0}
+  - {title: "Complete Form I-983 with your employer", details: "The training plan is signed by you and the employer.", due_in_days: 14, required_docs: ["I-983"]}
+  - {title: "Ask the DSO for a STEM OPT I-20", details: "Do this up to 90 days before your OPT ends.", due_in_days: 21, required_docs: ["New I-20 with STEM OPT recommendation"]}
+  - {title: "File Form I-765 (category C3C)", details: "File within 60 days of the DSO recommendation and before your current EAD expires. Check the current USCIS page for the exact window.", due_in_days: 28, required_docs: ["I-765", "I-983", "Copy of I-20", "Copy of degree", "Previous EAD", "Passport photos x2", "Filing fee"]}
+  - {title: "Track receipt and wait for the new EAD", details: "Keep the receipt notice. Work rules while pending depend on your filing date, so check USCIS.", due_in_days: 45}
+  - {title: "Validate with your employer every 6 months", details: "Submit the self-evaluation and report any changes to the DSO.", due_in_days: 180}

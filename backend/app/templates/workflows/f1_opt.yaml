@@ -1,0 +1,15 @@
+id: f1_opt
+title: Apply for F-1 OPT
+description: Post-completion OPT work permit. File I-765 with USCIS in the allowed window around your program end date.
+applies_to: [F-1]
+last_verified: 2026-10-16
+sources:
+  - {name: "USCIS - I-765", url: "https://www.uscis.gov/i-765"}
+  - {name: "Study in the States - OPT", url: "https://studyinthestates.dhs.gov"}
+steps:
+  - {title: "Talk to your DSO about OPT", details: "Confirm your eligibility and your OPT start and end dates.", due_in_days: 0}
+  - {title: "Ask the DSO to recommend OPT in SEVIS", details: "You get a new I-20 with the OPT recommendation.", due_in_days: 7, required_docs: ["New I-20 with OPT recommendation"]}
+  - {title: "File Form I-765 with USCIS (category C3B)", details: "File within 30 days of the DSO recommendation. The window is up to 90 days before and 60 days after your program end date.", due_in_days: 21, required_docs: ["I-765", "Passport photos x2", "Copy of I-20", "Copy of I-94", "Copy of passport", "Filing fee"]}
+  - {title: "Track your case with the receipt number", details: "Keep the receipt notice (I-797C).", due_in_days: 35}
+  - {title: "Receive the EAD card", details: "You cannot start work before the start date on the card.", due_in_days: 120}
+  - {title: "Report your job to the DSO / SEVP portal", details: "Report employer details within 10 days of starting. Do not exceed 90 days of unemployment.", due_in_days: 130}
