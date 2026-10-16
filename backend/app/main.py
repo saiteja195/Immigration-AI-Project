@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth, health, profile, tasks
+from app.api import auth, chat, health, profile, tasks
 from app.core.config import settings
 from app.core.db import close_client, get_db
 
@@ -30,3 +30,4 @@ app.include_router(health.router, prefix="/api")
 app.include_router(auth.router, prefix="/api")
 app.include_router(profile.router, prefix="/api")
 app.include_router(tasks.router, prefix="/api")
+app.include_router(chat.router, prefix="/api")

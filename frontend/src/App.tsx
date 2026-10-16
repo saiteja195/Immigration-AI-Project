@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
 import { AppShell } from "@/layout/AppShell";
@@ -7,6 +8,7 @@ import Dashboard from "@/pages/Dashboard";
 import Tasks from "@/pages/Tasks";
 import Plans from "@/pages/Plans";
 import Profile from "@/pages/Profile";
+const Chat = lazy(() => import("@/pages/Chat"));
 
 function Protected() {
   const { user, loading } = useAuth();
@@ -25,6 +27,7 @@ export default function App() {
         <Route index element={<Dashboard />} />
         <Route path="tasks" element={<Tasks />} />
         <Route path="plans" element={<Plans />} />
+        <Route path="chat" element={<Suspense fallback={null}><Chat /></Suspense>} />
         <Route path="profile" element={<Profile />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

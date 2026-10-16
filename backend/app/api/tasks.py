@@ -1,5 +1,3 @@
-from datetime import date, timedelta
-
 from bson import ObjectId
 from fastapi import APIRouter, Depends, HTTPException, status
 
@@ -8,6 +6,7 @@ from app.core.db import get_db
 from app.models.user import UserOut
 from app.models.workflow import (GoalIn, GoalOut, TaskIn, TaskOut, TaskUpdate, Workflow,
                                  WorkflowSummary)
+from app.services.goals import GoalError, create_goal
 from app.services.workflows import get_workflow, load_all
 
 router = APIRouter(tags=["tasks"])
@@ -49,26 +48,12 @@ async def workflow_detail(workflow_id: str, _: UserOut = Depends(current_user)):
 
 
 @router.post("/goals", response_model=GoalOut, status_code=status.HTTP_201_CREATED)
-async def create_goal(body: GoalIn, user: UserOut = Depends(current_user), db=Depends(get_db)):
-    wf = get_workflow(body.workflow_id)
-    if not wf:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Unknown workflow")
-    if await db.goals.find_one({"user_id": user.id, "workflow_id": wf.id}):
-        raise HTTPException(status.HTTP_409_CONFLICT, "You already have this goal")
-    start = body.start_date or date.today()
-    goal = {"user_id": user.id, "workflow_id": wf.id, "title": wf.title}
-    gid = str((await db.goals.insert_one(goal)).inserted_id)
-    tasks = [
-        {
-            "user_id": user.id, "goal_id": gid, "order": i,
-            "title": s.title, "details": s.details, "required_docs": s.required_docs,
-            "due_date": (start + timedelta(days=s.due_in_days)).isoformat(),
-            "done": False, "notes": "",
-        }
-        for i, s in enumerate(wf.steps)
-    ]
-    await db.tasks.insert_many(tasks)
-    return GoalOut(id=gid, workflow_id=wf.id, title=wf.title, total=len(tasks), completed=0)
+async def create_goal_route(body: GoalIn, user: UserOut = Depends(current_user), db=Depends(get_db)):
+    try:
+        return GoalOut(**await create_goal(db, user.id, body.workflow_id, body.start_date))
+    except GoalError as e:
+        code = status.HTTP_404_NOT_FOUND if e.code == "not_found" else status.HTTP_409_CONFLICT
+        raise HTTPException(code, str(e))
 
 
 @router.get("/goals", response_model=list[GoalOut])

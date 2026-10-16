@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { api, ApiError } from "./api";
-import type { Dependent, Goal, KeyDate, Profile, Task, Workflow, WorkflowSummary } from "./types";
+import type { ChatMessage, ChatReply, Dependent, Goal, KeyDate, Profile, Task, Workflow, WorkflowSummary } from "./types";
 
 export const useProfile = () =>
   useQuery({
@@ -125,3 +125,8 @@ export function useUpdateTask() {
     onSettled: () => qc.invalidateQueries({ queryKey: ["tasks"] }),
   });
 }
+
+export const useChatStatus = () => useQuery({ queryKey: ["chat-status"], queryFn: () => api.get<{ enabled: boolean }>("/chat/status") });
+export const useChatHistory = () => useQuery({ queryKey: ["chat-history"], queryFn: () => api.get<ChatMessage[]>("/chat/messages"), staleTime: Infinity });
+export const sendChat = (message: string) => api.post<ChatReply>("/chat", { message });
+export const clearChat = () => api.del("/chat");
