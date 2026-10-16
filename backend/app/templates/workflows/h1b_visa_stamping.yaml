@@ -1,0 +1,14 @@
+id: h1b_visa_stamping
+title: Get H-1B visa stamp (India)
+description: Needed to re-enter the US after travel if your visa stamp is expired. Appointments in India can have long waits.
+applies_to: [H-1B, H-4, H-4 EAD]
+last_verified: 2026-10-16
+sources:
+  - {name: "US Department of State - visas", url: "https://travel.state.gov"}
+steps:
+  - {title: "Check your passport and visa stamp expiry", details: "Make sure the passport has enough validity.", due_in_days: 0}
+  - {title: "Fill out Form DS-160", details: "Save the confirmation page with the barcode.", due_in_days: 7, required_docs: ["DS-160 confirmation"]}
+  - {title: "Pay the visa fee and book the appointment", details: "Check current wait times and book early.", due_in_days: 10}
+  - {title: "Gather documents", details: "Passport, I-797, employer letter, recent pay stubs, W-2, tax returns, and for H-4 the spouse's documents.", due_in_days: 14, required_docs: ["Passport", "I-797", "Employer letter", "Pay stubs", "W-2", "Tax returns"]}
+  - {title: "Attend the interview", details: "Bring all originals.", due_in_days: 60}
+  - {title: "Track passport return and check the stamp", details: "Check name, dates and visa class on the new stamp.", due_in_days: 70}

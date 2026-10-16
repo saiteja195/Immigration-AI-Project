@@ -1,0 +1,16 @@
+id: drivers_license
+title: Get a US driver's license
+description: Steps to get a state driver's license on a non-immigrant visa. Rules differ by state, so confirm each step on your state DMV site.
+applies_to: [F-1, F-1 OPT, F-1 STEM OPT, F-2, H-1B, H-4, H-4 EAD]
+last_verified: 2026-10-16
+sources:
+  - {name: "SSA - Social Security Number", url: "https://www.ssa.gov"}
+  - {name: "Your state DMV (search 'DMV' + your state)", url: "https://www.usa.gov/motor-vehicle-services"}
+steps:
+  - {title: "Check your state DMV rules for non-citizens", details: "Find the document list and whether an SSN or an SSA ineligibility letter is needed.", due_in_days: 0}
+  - {title: "Get your SSN (or the SSA letter if you are not eligible)", details: "Most states ask for one or the other. See the SSN workflow.", due_in_days: 7}
+  - {title: "Gather documents", details: "Passport, visa, I-94, and your I-20 / I-797 / EAD. Plus 2 proofs of state residency (lease, bills, bank statement).", due_in_days: 10, required_docs: ["Passport", "I-94", "I-20 / I-797 / EAD", "Proof of address x2", "SSN or SSA letter"]}
+  - {title: "Book a DMV appointment", details: "Many DMVs need an appointment for non-citizens.", due_in_days: 12}
+  - {title: "Pass the written (knowledge) test", details: "Study the state driver handbook.", due_in_days: 20}
+  - {title: "Pass the road test", details: "Book early, waits can be long. Bring a registered, insured car if the DMV requires it.", due_in_days: 40}
+  - {title: "Check the license expiry date", details: "Licenses for non-citizens are usually tied to your I-94 / I-20 end date. Add a reminder to renew.", due_in_days: 45}

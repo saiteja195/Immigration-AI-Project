@@ -1,0 +1,17 @@
+id: f1_to_h1b
+title: Change status from F-1 to H-1B
+description: The employer sponsors you. Steps run on the yearly H-1B cap calendar. Fees and selection rules have changed recently, so check USCIS before each step.
+applies_to: [F-1, F-1 OPT, F-1 STEM OPT]
+last_verified: 2026-10-16
+sources:
+  - {name: "USCIS - H-1B specialty occupations", url: "https://www.uscis.gov/working-in-the-united-states/h-1b-specialty-occupations"}
+  - {name: "USCIS - I-129", url: "https://www.uscis.gov/i-129"}
+steps:
+  - {title: "Confirm your employer will sponsor you", details: "Ask HR or the immigration attorney about the timeline and who pays fees.", due_in_days: 0}
+  - {title: "Employer registers you in the H-1B cap registration", details: "Registration is usually in March. Check the current dates on USCIS.", due_in_days: 14}
+  - {title: "Wait for the selection result", details: "USCIS notifies employers by the end of March.", due_in_days: 45}
+  - {title: "Send your documents to the employer's attorney", details: "Degree and transcripts, passport, I-94, I-20, EAD, résumé, and any credential evaluation.", due_in_days: 50, required_docs: ["Degree and transcripts", "Passport", "I-94", "I-20", "EAD", "Résumé"]}
+  - {title: "Employer files Form I-129 with change of status", details: "The filing window usually starts April 1 and runs for 90 days. Choose a change of status if you stay in the US.", due_in_days: 75}
+  - {title: "Check cap-gap protection", details: "If you are on OPT, a timely filed petition can extend your status and work authorization. Confirm the dates with your DSO.", due_in_days: 80}
+  - {title: "Track the case and respond to any RFE", details: "Keep the receipt number. Reply to a request for evidence before the deadline.", due_in_days: 120}
+  - {title: "Start H-1B on October 1 after approval", details: "Update your I-9, I-94 and DSO records.", due_in_days: 180}

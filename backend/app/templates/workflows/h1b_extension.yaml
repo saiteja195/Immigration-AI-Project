@@ -1,0 +1,14 @@
+id: h1b_extension
+title: Extend H-1B
+description: Employer files an extension before your current approval ends. Total H-1B time is normally 6 years, with some exceptions.
+applies_to: [H-1B]
+last_verified: 2026-10-16
+sources:
+  - {name: "USCIS - I-129", url: "https://www.uscis.gov/i-129"}
+steps:
+  - {title: "Check your I-797 end date and total H-1B time used", details: "Count the days you were in H-1B status in the US.", due_in_days: 0}
+  - {title: "Tell your employer 8 to 10 months before expiry", details: "A new LCA is needed before the petition.", due_in_days: 7}
+  - {title: "Gather updated documents", details: "Passport, latest I-797 and I-94, recent pay stubs, and a W-2.", due_in_days: 21, required_docs: ["Passport", "Latest I-797", "I-94", "Pay stubs", "W-2"]}
+  - {title: "Employer files I-129 (up to 6 months before expiry)", details: "Ask about premium processing for a faster decision.", due_in_days: 45}
+  - {title: "Track the case and respond to any RFE", details: "Keep the receipt notice.", due_in_days: 60}
+  - {title: "Save the new I-797 and update your records", details: "Update your I-9 and calendar the new expiry date.", due_in_days: 120}
