@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth, health
+from app.api import auth, health, profile
 from app.core.config import settings
 from app.core.db import close_client, get_db
 
@@ -28,3 +28,4 @@ app.add_middleware(
 )
 app.include_router(health.router, prefix="/api")
 app.include_router(auth.router, prefix="/api")
+app.include_router(profile.router, prefix="/api")
