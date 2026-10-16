@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     token_minutes: int = 60 * 24
     cookie_secure: bool = False  # set True behind HTTPS
     anthropic_api_key: str = ""  # chat is disabled until this is set
-    anthropic_model: str = "claude-haiku-5-5"
+    anthropic_model: str = "claude-sonnet-5-5"
     chat_max_tokens: int = 1500
     chat_daily_limit: int = 50  # user messages per day, to cap API cost
     cors_origins: list[str] = ["http://localhost:5173"]
