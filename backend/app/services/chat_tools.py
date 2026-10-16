@@ -23,6 +23,11 @@ CUSTOM_TOOLS = [
         "input_schema": {"type": "object", "properties": {}},
     },
     {
+        "name": "get_my_cases",
+        "description": "List the USCIS cases (receipt numbers, form type, stage, latest status, RFE due date) the user is tracking.",
+        "input_schema": {"type": "object", "properties": {}},
+    },
+    {
         "name": "get_my_tasks",
         "description": "List the user's open tasks with due dates.",
         "input_schema": {"type": "object", "properties": {}},
@@ -92,6 +97,10 @@ async def run_tool(db, user_id: str, name: str, args: dict) -> tuple[str, dict |
             for k, v in profile.items() if k.endswith(("_expiry", "_date")) and v
         }
         return json.dumps({"today": today.isoformat(), "profile": profile, "days_left": days, "family": deps}), None
+
+    if name == "get_my_cases":
+        cases = await db.cases.find({"user_id": user_id}, {"_id": 0, "user_id": 0}).to_list(50)
+        return json.dumps(cases) if cases else "The user is not tracking any cases yet.", None
 
     if name == "get_my_tasks":
         tasks = await db.tasks.find({"user_id": user_id, "done": False}).sort([("due_date", 1)]).to_list(50)

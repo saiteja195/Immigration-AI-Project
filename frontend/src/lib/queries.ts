@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { api, ApiError } from "./api";
-import type { NotificationList, ReminderPrefs, ChatMessage, ChatReply, Dependent, Goal, KeyDate, Profile, Task, Workflow, WorkflowSummary } from "./types";
+import type { Case, NewCase, NotificationList, ReminderPrefs, ChatMessage, ChatReply, Dependent, Goal, KeyDate, Profile, Task, Workflow, WorkflowSummary } from "./types";
 
 export const useProfile = () =>
   useQuery({
@@ -153,3 +153,25 @@ export function useSaveReminderPrefs() {
     onError,
   });
 }
+
+export const useCases = () => useQuery({ queryKey: ["cases"], queryFn: () => api.get<Case[]>("/cases") });
+
+function useCaseMutation<V, R>(fn: (v: V) => Promise<R>, message?: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: fn,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["cases"] });
+      qc.invalidateQueries({ queryKey: ["key-dates"] });
+      if (message) toast.success(message);
+    },
+    onError,
+  });
+}
+export const useAddCase = () => useCaseMutation((c: NewCase) => api.post<Case>("/cases", c), "Case added");
+export const useUpdateCase = () =>
+  useCaseMutation((v: { id: string } & Partial<Pick<Case, "label" | "stage" | "status_text" | "notes" | "rfe_due_date">>) => {
+    const { id, ...patch } = v;
+    return api.patch<Case>(`/cases/${id}`, patch);
+  }, "Case updated");
+export const useDeleteCase = () => useCaseMutation((id: string) => api.del(`/cases/${id}`));

@@ -5,7 +5,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth, chat, health, profile, reminders, tasks
+from app.api import auth, cases, chat, health, profile, reminders, tasks
 from app.core.config import settings
 from app.core.db import close_client, get_db
 from app.services.mailer import get_mailer
@@ -16,6 +16,7 @@ from app.services.reminders import run_all
 async def lifespan(_: FastAPI):
     try:
         await get_db().users.create_index("email", unique=True)
+        await get_db().cases.create_index([("user_id", 1), ("receipt_number", 1)], unique=True)
         await get_db().notifications.create_index([("user_id", 1), ("key", 1)], unique=True)
     except Exception:
         pass  # Mongo not reachable yet; /api/health will show it
@@ -45,3 +46,4 @@ app.include_router(profile.router, prefix="/api")
 app.include_router(tasks.router, prefix="/api")
 app.include_router(chat.router, prefix="/api")
 app.include_router(reminders.router, prefix="/api")
+app.include_router(cases.router, prefix="/api")

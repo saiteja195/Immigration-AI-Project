@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { AlertTriangle, ArrowRight, CalendarClock, CheckCircle2, Compass, ListChecks, ShieldCheck, UserRound } from "lucide-react";
+import { AlertTriangle, FolderOpen, ArrowRight, CalendarClock, CheckCircle2, Compass, ListChecks, ShieldCheck, UserRound } from "lucide-react";
 import { Ring } from "@/components/Ring";
 import { CountUp } from "@/components/CountUp";
 import { Badge, EmptyState, Skeleton } from "@/components/ui";
 import { TaskItem } from "@/components/TaskItem";
 import { Button } from "@/components/Button";
 import { useAuth } from "@/lib/auth";
-import { useGoals, useKeyDates, useProfile, useTasks } from "@/lib/queries";
+import { useCases, useGoals, useKeyDates, useProfile, useTasks } from "@/lib/queries";
+import { STAGE_LABEL, stageTone } from "@/components/CaseStage";
 import { daysLabel, fmtDate, greeting, tone, type Tone } from "@/lib/format";
 
 const TONE_VAR: Record<Tone, string> = { danger: "var(--danger)", warn: "var(--warn)", ok: "var(--ok)" };
@@ -20,6 +21,8 @@ export default function Dashboard() {
   const dates = useKeyDates();
   const goals = useGoals();
   const tasks = useTasks();
+  const cases = useCases();
+  const activeCases = (cases.data ?? []).filter((c) => !c.closed).slice(0, 3);
 
   const first = user?.full_name.split(" ")[0];
   const loading = profile.isLoading || dates.isLoading || tasks.isLoading;
@@ -41,7 +44,7 @@ export default function Dashboard() {
       {urgent.length > 0 && (
         <motion.div variants={item} role="status" className="flex items-start gap-3 rounded-2xl border border-danger/25 bg-danger/8 p-4 text-sm">
           <AlertTriangle className="mt-0.5 size-4 shrink-0 text-danger" />
-          <p><span className="font-medium">Needs attention: </span>{urgent.slice(0, 3).map((d) => `${d.label}${d.owner !== "me" ? ` (${d.owner})` : ""} ${d.days_left < 0 ? "expired" : `in ${daysLabel(d.days_left)}`}`).join(" · ")}. <Link to="/plans" className="font-medium text-accent hover:underline">See plans</Link></p>
+          <p><span className="font-medium">Needs attention: </span>{urgent.slice(0, 3).map((d) => `${d.label}${d.owner !== "me" ? ` (${d.owner})` : ""} ${d.days_left < 0 ? "expired" : `in ${daysLabel(d.days_left)}`}`).join(" · ")}. <Link to={urgent.some((d) => d.label.startsWith("RFE")) ? "/cases" : "/plans"} className="font-medium text-accent hover:underline">{urgent.some((d) => d.label.startsWith("RFE")) ? "See cases" : "See plans"}</Link></p>
         </motion.div>
       )}
 
@@ -127,6 +130,27 @@ export default function Dashboard() {
           )}
         </motion.section>
       </div>
+
+      {activeCases.length > 0 && (
+        <motion.section variants={item} className="card p-6">
+          <div className="mb-3 flex items-center justify-between">
+            <h2 className="flex items-center gap-2 font-medium"><FolderOpen className="size-4 text-muted" /> Active cases</h2>
+            <Link to="/cases" className="text-sm text-accent hover:underline">All cases</Link>
+          </div>
+          <ul className="divide-y divide-line">
+            {activeCases.map((c) => (
+              <li key={c.id} className="flex items-center gap-3 py-3">
+                <Badge tone="accent">{c.form_type}</Badge>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-medium">{c.label || `${c.form_type} case`}</p>
+                  <p className="font-mono text-xs text-muted">{c.receipt_number}</p>
+                </div>
+                <Badge tone={stageTone(c.stage)}>{STAGE_LABEL[c.stage]}</Badge>
+              </li>
+            ))}
+          </ul>
+        </motion.section>
+      )}
     </motion.div>
   );
 }
