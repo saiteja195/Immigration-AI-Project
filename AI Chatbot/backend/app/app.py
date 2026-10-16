@@ -17,9 +17,10 @@ app.logger.setLevel(logging.INFO)
 
 
 client = Client(
-    api_key="rpa_35V2FN4F5CH902OUBLJAJYITS6P3HNOR1GY7HVUY970uqo",
-    base_url="https://api.runpod.ai/v2/ht6s0givb0ruh4/openai/v1"
+    api_key=os.getenv("LLM_API_KEY", ""),
+    base_url=os.getenv("LLM_BASE_URL", "")
 )
+LLM_MODEL = os.getenv("LLM_MODEL", "google/gemma-3-1b-it")
 
 
 @app.route("/")
@@ -44,7 +45,7 @@ def chat():
         ]
 
         completion = client.chat.completions.create(
-            model="google/gemma-3-1b-it",
+            model=LLM_MODEL,
             messages=messages_for_api
         )
 
