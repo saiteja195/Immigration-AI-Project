@@ -4,6 +4,9 @@ import { AppShell } from "@/layout/AppShell";
 import Login from "@/pages/Login";
 import Signup from "@/pages/Signup";
 import Dashboard from "@/pages/Dashboard";
+import Tasks from "@/pages/Tasks";
+import Plans from "@/pages/Plans";
+import Profile from "@/pages/Profile";
 
 function Protected() {
   const { user, loading } = useAuth();
@@ -20,6 +23,9 @@ export default function App() {
       <Route path="/signup" element={<Signup />} />
       <Route element={<Protected />}>
         <Route index element={<Dashboard />} />
+        <Route path="tasks" element={<Tasks />} />
+        <Route path="plans" element={<Plans />} />
+        <Route path="profile" element={<Profile />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
