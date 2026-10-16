@@ -6,3 +6,6 @@ venv/
 instance/
 .DS_Store
 data/
+node_modules/
+dist/
+*.tsbuildinfo
