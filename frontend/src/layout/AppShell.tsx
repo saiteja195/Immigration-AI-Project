@@ -1,19 +1,25 @@
+import { useEffect } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
 import { Logo } from "@/components/Logo";
 import { AccountMenu } from "@/components/AccountMenu";
+import { NotificationBell } from "@/components/NotificationBell";
+import { useNotificationActions } from "@/lib/queries";
 import { NAV } from "./nav";
 
 export function AppShell() {
   const { pathname } = useLocation();
+  const { check } = useNotificationActions();
+  useEffect(() => { check().catch(() => {}); }, []); // run today's reminder check once per visit
   return (
     <div className="min-h-dvh lg:grid lg:grid-cols-[17rem_1fr]">
       {/* Desktop sidebar */}
-      <aside className="sticky top-0 hidden h-dvh flex-col border-r border-line p-4 lg:flex">
+      <aside className="sticky top-0 z-30 hidden h-dvh flex-col border-r border-line p-4 lg:flex">
         <div className="flex items-center gap-3 px-2 py-3">
           <Logo />
           <span className="font-semibold tracking-tight">Immigration AI</span>
+          <span className="ml-auto"><NotificationBell align="left" /></span>
         </div>
         <nav className="mt-6 flex flex-1 flex-col gap-1" aria-label="Main">
           {NAV.map(({ to, label, icon: Icon }) => (
@@ -49,7 +55,7 @@ export function AppShell() {
           <Logo size={28} />
           <span className="font-semibold tracking-tight">Immigration AI</span>
         </div>
-        <div className="w-12"><AccountMenu placement="down" /></div>
+        <div className="flex items-center gap-1"><NotificationBell align="right" /><div className="w-12"><AccountMenu placement="down" /></div></div>
       </header>
 
       <main className="mx-auto w-full max-w-6xl px-4 pb-28 pt-6 sm:px-8 lg:pb-12 lg:pt-10">
