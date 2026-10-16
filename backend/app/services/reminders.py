@@ -33,15 +33,16 @@ async def build_candidates(db, user_id: str, prefs: dict, today: date) -> list[d
         who = "" if k["owner"] == "me" else f" ({k['owner']})"
         name = f"{k['label']}{who}"
         base = f"kd:{k['label']}:{k['owner']}:{k['due']}"
+        link = "/cases" if k["label"].startswith("RFE") else "/plans"
         if k["days_left"] < 0:
-            out.append({"key": f"{base}:expired", "kind": "key_date", "tone": "danger", "link": "/plans",
+            out.append({"key": f"{base}:expired", "kind": "key_date", "tone": "danger", "link": link,
                         "title": f"{name} has passed", "body": f"It was on {k['due']:%b %d, %Y}. Check what you need to do next."})
             continue
         window = next((w for w in windows if k["days_left"] <= w), None)  # the closest window we are inside
         if window is not None:
             when = "today" if k["days_left"] == 0 else f"in {_plural(k['days_left'])}"
-            out.append({"key": f"{base}:{window}", "kind": "key_date", "tone": _tone(k["days_left"]), "link": "/plans",
-                        "title": f"{name} {when}", "body": f"Due {k['due']:%b %d, %Y}. Start early, see Plans for the steps."})
+            out.append({"key": f"{base}:{window}", "kind": "key_date", "tone": _tone(k["days_left"]), "link": link,
+                        "title": f"{name} {when}", "body": f"Due {k['due']:%b %d, %Y}. " + ("Prepare your response soon." if link == "/cases" else "Start early, see Plans for the steps.")})
 
     if prefs["task_reminders"]:
         async for t in db.tasks.find({"user_id": user_id, "done": False, "due_date": {"$ne": None}}):
