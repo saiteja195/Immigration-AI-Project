@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { api, ApiError } from "./api";
-import type { ChatMessage, ChatReply, Dependent, Goal, KeyDate, Profile, Task, Workflow, WorkflowSummary } from "./types";
+import type { NotificationList, ReminderPrefs, ChatMessage, ChatReply, Dependent, Goal, KeyDate, Profile, Task, Workflow, WorkflowSummary } from "./types";
 
 export const useProfile = () =>
   useQuery({
@@ -130,3 +130,26 @@ export const useChatStatus = () => useQuery({ queryKey: ["chat-status"], queryFn
 export const useChatHistory = () => useQuery({ queryKey: ["chat-history"], queryFn: () => api.get<ChatMessage[]>("/chat/messages"), staleTime: Infinity });
 export const sendChat = (message: string) => api.post<ChatReply>("/chat", { message });
 export const clearChat = () => api.del("/chat");
+
+export const useNotifications = () =>
+  useQuery({ queryKey: ["notifications"], queryFn: () => api.get<NotificationList>("/notifications"), refetchInterval: 60_000 });
+
+export function useNotificationActions() {
+  const qc = useQueryClient();
+  const refresh = () => qc.invalidateQueries({ queryKey: ["notifications"] });
+  return {
+    markRead: useMutation({ mutationFn: (id: string) => api.post(`/notifications/${id}/read`), onSuccess: refresh }),
+    readAll: useMutation({ mutationFn: () => api.post("/notifications/read-all"), onSuccess: refresh }),
+    check: () => api.post<NotificationList>("/reminders/check").then((d) => qc.setQueryData(["notifications"], d)),
+  };
+}
+
+export const useReminderPrefs = () => useQuery({ queryKey: ["reminder-prefs"], queryFn: () => api.get<ReminderPrefs>("/reminders/prefs") });
+export function useSaveReminderPrefs() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (p: ReminderPrefs) => api.put<ReminderPrefs>("/reminders/prefs", { email_enabled: p.email_enabled, task_reminders: p.task_reminders, windows: p.windows }),
+    onSuccess: (d) => { qc.setQueryData(["reminder-prefs"], d); toast.success("Reminder settings saved"); },
+    onError,
+  });
+}

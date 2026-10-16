@@ -1,5 +1,3 @@
-from datetime import date
-
 from bson import ObjectId
 from fastapi import APIRouter, Depends, HTTPException, status
 
@@ -7,18 +5,9 @@ from app.api.auth import current_user
 from app.core.db import get_db
 from app.models.profile import DependentIn, DependentOut, KeyDateOut, ProfileIn, ProfileOut
 from app.models.user import UserOut
+from app.services.keydates import collect_key_dates
 
 router = APIRouter(tags=["profile"])
-
-DATE_FIELDS = {
-    "i94_expiry": "I-94 expiry",
-    "visa_stamp_expiry": "Visa stamp expiry",
-    "passport_expiry": "Passport expiry",
-    "ead_expiry": "EAD expiry",
-    "i20_end_date": "I-20 end date",
-    "i797_expiry": "I-797 approval expiry",
-}
-
 
 @router.get("/profile", response_model=ProfileOut)
 async def get_profile(user: UserOut = Depends(current_user), db=Depends(get_db)):
@@ -60,19 +49,4 @@ async def delete_dependent(dependent_id: str, user: UserOut = Depends(current_us
 @router.get("/key-dates", response_model=list[KeyDateOut])
 async def key_dates(user: UserOut = Depends(current_user), db=Depends(get_db)):
     """All upcoming expiry dates (me + dependents), soonest first."""
-    today = date.today()
-    items: list[KeyDateOut] = []
-
-    def collect(doc, owner):
-        for field, label in DATE_FIELDS.items():
-            raw = doc.get(field)
-            if raw:
-                due = date.fromisoformat(raw)
-                items.append(KeyDateOut(label=label, owner=owner, due=due, days_left=(due - today).days))
-
-    profile = await db.profiles.find_one({"user_id": user.id})
-    if profile:
-        collect(profile, "me")
-    async for dep in db.dependents.find({"user_id": user.id}):
-        collect(dep, dep["name"])
-    return sorted(items, key=lambda k: k.due)
+    return [KeyDateOut(**k) for k in await collect_key_dates(db, user.id)]

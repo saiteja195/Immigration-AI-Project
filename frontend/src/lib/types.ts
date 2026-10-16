@@ -48,3 +48,7 @@ export interface Citation { title: string; url: string }
 export interface ChatAction { type: "plan" | "task"; title: string }
 export interface ChatMessage { role: "user" | "assistant"; content: string; citations?: Citation[]; actions?: ChatAction[] }
 export interface ChatReply { reply: string; citations: Citation[]; actions: ChatAction[] }
+
+export interface AppNotification { id: string; kind: string; title: string; body: string; link: string; tone: "danger" | "warn" | "ok"; created: string; read: boolean }
+export interface NotificationList { unread: number; items: AppNotification[] }
+export interface ReminderPrefs { email_enabled: boolean; task_reminders: boolean; windows: number[]; email_available?: boolean }

@@ -8,6 +8,7 @@ import { Badge, PageHeader, SelectField, Skeleton } from "@/components/ui";
 import { useAddDependent, useDeleteDependent, useDependents, useProfile, useSaveProfile } from "@/lib/queries";
 import { VISA_TYPES, type Profile, type VisaType } from "@/lib/types";
 import { fmtDate } from "@/lib/format";
+import { ReminderSettings } from "@/components/ReminderSettings";
 
 const DATE_FIELDS: { key: keyof Profile; label: string }[] = [
   { key: "i94_expiry", label: "I-94 expiry" },
@@ -112,6 +113,7 @@ export default function ProfilePage() {
         </form>
       )}
       <Dependents />
+      <ReminderSettings />
     </div>
   );
 }
