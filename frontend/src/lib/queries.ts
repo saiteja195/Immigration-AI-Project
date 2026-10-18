@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { api, ApiError } from "./api";
-import type { Case, NewCase, NotificationList, ReminderPrefs, ChatMessage, ChatReply, Dependent, Goal, KeyDate, Profile, Task, Workflow, WorkflowSummary } from "./types";
+import type { VisaCatalog, Case, NewCase, NotificationList, ReminderPrefs, ChatMessage, ChatReply, Dependent, Goal, KeyDate, Profile, Task, Workflow, WorkflowSummary } from "./types";
 
 export const useProfile = () =>
   useQuery({
@@ -175,3 +175,5 @@ export const useUpdateCase = () =>
     return api.patch<Case>(`/cases/${id}`, patch);
   }, "Case updated");
 export const useDeleteCase = () => useCaseMutation((id: string) => api.del(`/cases/${id}`));
+
+export const useVisas = () => useQuery({ queryKey: ["visas"], queryFn: () => api.get<VisaCatalog>("/visas"), staleTime: Infinity });

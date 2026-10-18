@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, type ReactNode, type SelectHTMLAttributes } f
 import { X } from "lucide-react";
 import clsx from "clsx";
 import type { Tone } from "@/lib/format";
+import type { VisaCatalog } from "@/lib/types";
 
 export function Badge({ tone, children }: { tone?: Tone | "accent" | "muted"; children: ReactNode }) {
   const styles = {
@@ -78,3 +79,19 @@ export function Modal({ open, onClose, title, children, footer }: { open: boolea
 }
 
 export const Skeleton = ({ className }: { className?: string }) => <div className={clsx("skeleton", className)} />;
+
+/** Status picker grouped by category (work, student, family, visitor, green card). */
+export function VisaSelect({ label, value, onChange, catalog, onlyCategories }: {
+  label: string; value: string; onChange: (code: string) => void; catalog?: VisaCatalog; onlyCategories?: string[];
+}) {
+  return (
+    <SelectField label={label} value={value} onChange={(e) => onChange(e.target.value)}>
+      {!catalog && <option>{value}</option>}
+      {catalog?.categories.filter((c) => !onlyCategories || onlyCategories.includes(c.id)).map((c) => (
+        <optgroup key={c.id} label={c.label}>
+          {catalog.visas.filter((v) => v.category === c.id).map((v) => <option key={v.code} value={v.code}>{v.code === v.name ? v.code : v.name}</option>)}
+        </optgroup>
+      ))}
+    </SelectField>
+  );
+}

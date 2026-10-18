@@ -1,4 +1,4 @@
-from app.models.profile import VisaType
+from app.services.visas import visa_codes
 from app.services.workflows import load_all
 
 USER = {"email": "me@example.com", "password": "correct-horse", "full_name": "Test User"}
@@ -11,7 +11,7 @@ def login(client, user=USER):
 
 
 def test_all_templates_are_valid():
-    visas = {v.value for v in VisaType}
+    visas = set(visa_codes())
     workflows = load_all()
     assert len(workflows) >= 8
     for wf in workflows.values():
