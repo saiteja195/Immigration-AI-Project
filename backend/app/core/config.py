@@ -22,6 +22,9 @@ class Settings(BaseSettings):
     smtp_user: str = ""
     smtp_password: str = ""
     smtp_from: str = ""
+    allow_signups: bool = True  # when false, only the very first account can be created
+    login_max_attempts: int = 5  # wrong passwords allowed per email in the window
+    login_window_minutes: int = 15
     cors_origins: list[str] = ["http://localhost:5173"]
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")

@@ -3,10 +3,11 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { AuthLayout } from "@/layout/AuthLayout";
 import { Field } from "@/components/Field";
 import { Button } from "@/components/Button";
-import { useAuth } from "@/lib/auth";
+import { useAuth, useSignupsOpen } from "@/lib/auth";
 
 export default function Signup() {
   const { user, signup } = useAuth();
+  const signups = useSignupsOpen();
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -35,6 +36,14 @@ export default function Signup() {
     } finally {
       setBusy(false);
     }
+  }
+
+  if (signups.data?.signups_open === false) {
+    return (
+      <AuthLayout title="Signups are closed" subtitle="This app is not accepting new accounts right now.">
+        <Link to="/login" className="font-medium text-accent hover:underline">Back to sign in</Link>
+      </AuthLayout>
+    );
   }
 
   return (

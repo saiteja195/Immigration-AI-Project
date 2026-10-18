@@ -55,6 +55,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
+export const useSignupsOpen = () =>
+  useQuery({ queryKey: ["auth-config"], queryFn: () => api.get<{ signups_open: boolean }>("/auth/config"), staleTime: 60_000 });
+
 export function useAuth() {
   const ctx = useContext(AuthContext);
   if (!ctx) throw new Error("useAuth must be used inside AuthProvider");

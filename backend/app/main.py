@@ -16,6 +16,7 @@ from app.services.reminders import run_all
 async def lifespan(_: FastAPI):
     try:
         await get_db().users.create_index("email", unique=True)
+        await get_db().login_failures.create_index("at", expireAfterSeconds=settings.login_window_minutes * 60)
         await get_db().cases.create_index([("user_id", 1), ("receipt_number", 1)], unique=True)
         await get_db().notifications.create_index([("user_id", 1), ("key", 1)], unique=True)
     except Exception:
