@@ -17,7 +17,7 @@ App: http://localhost:8080 · API docs: http://localhost:8000/docs
 
 ```bash
 # backend (needs a MongoDB on localhost:27017)
-cd backend && pip install -r requirements.txt && uvicorn app.main:app --reload
+cd backend && pip install -r requirements-dev.txt && uvicorn app.main:app --reload
 
 # frontend
 cd frontend && npm install && npm run dev      # http://localhost:5173
