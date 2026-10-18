@@ -39,6 +39,7 @@ Creates `demo@example.com` / `demo-password-123` with a sample H-1B profile, a s
 | `JWT_SECRET` | Signs login cookies. Set a long random value |
 | `ALLOW_SIGNUPS` | Set `false` to close public signups. The very first account can still be created |
 | `COOKIE_SECURE` | Set `true` when served over HTTPS |
+| `ENCRYPTION_KEY` | Turns on the document vault. Make one with `python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"` and keep it safe. Without it, stored documents cannot be read |
 | `ANTHROPIC_API_KEY` | Turns on the assistant. Chat is disabled without it |
 | `ANTHROPIC_MODEL` | Model used by the assistant |
 

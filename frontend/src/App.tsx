@@ -9,6 +9,7 @@ import Tasks from "@/pages/Tasks";
 import Plans from "@/pages/Plans";
 import Profile from "@/pages/Profile";
 import Cases from "@/pages/Cases";
+import Documents from "@/pages/Documents";
 const Chat = lazy(() => import("@/pages/Chat"));
 
 function Protected() {
@@ -29,6 +30,7 @@ export default function App() {
         <Route path="tasks" element={<Tasks />} />
         <Route path="cases" element={<Cases />} />
         <Route path="plans" element={<Plans />} />
+        <Route path="documents" element={<Documents />} />
         <Route path="chat" element={<Suspense fallback={null}><Chat /></Suspense>} />
         <Route path="profile" element={<Profile />} />
       </Route>

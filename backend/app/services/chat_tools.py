@@ -3,6 +3,7 @@ import json
 from datetime import date
 
 from app.services import goals as goal_service
+from app.services import vault
 from app.services.workflows import get_workflow, load_all
 
 WEB_SEARCH_TOOL = {
@@ -26,6 +27,11 @@ CUSTOM_TOOLS = [
         "name": "get_my_cases",
         "description": "List the USCIS cases (receipt numbers, form type, stage, latest status, RFE due date) the user is tracking.",
         "input_schema": {"type": "object", "properties": {}},
+    },
+    {
+        "name": "search_my_documents",
+        "description": "Search the text of documents the user uploaded (such as an I-797 or passport scan) for a keyword or phrase. Only works if the user allowed the assistant to read their documents. Scanned images have no searchable text.",
+        "input_schema": {"type": "object", "properties": {"query": {"type": "string"}}, "required": ["query"]},
     },
     {
         "name": "get_my_tasks",
@@ -102,6 +108,9 @@ async def run_tool(db, user_id: str, name: str, args: dict) -> tuple[str, dict |
         cases = await db.cases.find({"user_id": user_id}, {"_id": 0, "user_id": 0}).to_list(50)
         return json.dumps(cases) if cases else "The user is not tracking any cases yet.", None
 
+    if name == "search_my_documents":
+        return await _search_documents(db, user_id, str(args.get("query", ""))), None
+
     if name == "get_my_tasks":
         tasks = await db.tasks.find({"user_id": user_id, "done": False}).sort([("due_date", 1)]).to_list(50)
         return json.dumps([{"title": t["title"], "due_date": t.get("due_date")} for t in tasks]), None
@@ -131,3 +140,24 @@ async def run_tool(db, user_id: str, name: str, args: dict) -> tuple[str, dict |
         return f"Added task '{title}'.", {"type": "task", "title": title}
 
     return f"Unknown tool: {name}", None
+
+
+async def _search_documents(db, user_id: str, query: str) -> str:
+    settings_doc = await db.doc_settings.find_one({"user_id": user_id})
+    if not (settings_doc and settings_doc.get("assistant_access")):
+        return "The user has not allowed the assistant to read their documents. Tell them they can turn this on in Documents."
+    fernet = vault.get_fernet()
+    if fernet is None:
+        return "The document vault is not set up."
+    hits = []
+    async for d in db.documents.find({"user_id": user_id, "text_enc": {"$ne": None}}):
+        try:
+            text = fernet.decrypt(d["text_enc"]).decode()
+        except Exception:
+            continue
+        score, excerpts = vault.search_excerpts(text, query)
+        if score:
+            hits.append((score, {"document": d["name"], "type": d["kind"], "excerpts": excerpts}))
+    if not hits:
+        return "No matching text found in the user's searchable documents."
+    return json.dumps([h for _, h in sorted(hits, key=lambda x: -x[0])[:3]])
