@@ -1,0 +1,19 @@
+id: employment_green_card
+title: Green card through your employer
+topic: green_card
+description: The usual employer route has three stages. Labor certification (PERM), the I-140 petition, then the I-485 application when your priority date is current. It can take years, especially for India.
+applies_to: [H-1B, L-1, O-1, E-3, TN, F-1 OPT, F-1 STEM OPT, H-4 EAD]
+last_verified: 2026-10-18
+sources:
+  - {name: "USCIS - Green card through a job", url: "https://www.uscis.gov/green-card/green-card-eligibility/green-card-for-employment-based-immigrants"}
+  - {name: "State Dept - Visa Bulletin", url: "https://travel.state.gov/content/travel/en/legal/visa-law0/visa-bulletin.html"}
+steps:
+  - {title: "Ask your employer about sponsorship", details: "Learn which category fits (EB-1, EB-2 or EB-3), who pays, and the timeline.", due_in_days: 0}
+  - {title: "Employer starts PERM labor certification", details: "This includes a prevailing wage request, job recruitment, and filing with the Department of Labor.", due_in_days: 60}
+  - {title: "Employer files Form I-140", details: "Premium processing may be available for a faster decision. Some people (EB-1A, national interest waiver) can self-petition.", due_in_days: 400, required_docs: ["Degree and transcripts", "Experience letters", "Résumé", "Passport"]}
+  - {title: "Note your priority date", details: "It is on the I-140 approval. It decides your place in line.", due_in_days: 410}
+  - {title: "Watch the Visa Bulletin each month", details: "You can file the I-485 only when your date is current on the chart USCIS says to use. Waits vary widely by category and country.", due_in_days: 420}
+  - {title: "File I-485 with I-765 and I-131", details: "Include the medical exam (I-693) and supporting documents. Get advance parole before any travel.", due_in_days: 600, required_docs: ["I-485", "I-693", "I-765", "I-131", "Passport photos", "Birth certificate", "I-140 approval"]}
+  - {title: "Keep your H-1B or other status valid while waiting", details: "H-1B extensions beyond 6 years may be possible once the process started. Track your dates in the app.", due_in_days: 620}
+  - {title: "Biometrics and interview", details: "An interview may not be required in every case.", due_in_days: 700}
+  - {title: "Receive your green card", details: "Update your records, Social Security and employer.", due_in_days: 800}

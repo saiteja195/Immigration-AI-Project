@@ -1,0 +1,14 @@
+id: esta_application
+title: Apply for ESTA (Visa Waiver)
+topic: visitor
+description: Electronic travel approval for short visits from Visa Waiver countries. Use only the official government site, since many look-alike sites charge extra.
+applies_to: [ESTA]
+last_verified: 2026-10-18
+sources:
+  - {name: "Official ESTA site (CBP)", url: "https://esta.cbp.dhs.gov"}
+steps:
+  - {title: "Check you are eligible", details: "Your country must be in the Visa Waiver Program and the visit must be 90 days or less, for tourism or short business. No work or study.", due_in_days: 0}
+  - {title: "Apply on the official ESTA website", details: "Have your passport ready. Double-check the passport number and your answers before you submit.", due_in_days: 2, required_docs: ["Passport", "Travel details", "Contact in the US"]}
+  - {title: "Pay the fee and save your approval", details: "Print or save the approval. It is linked to your passport.", due_in_days: 3}
+  - {title: "Check the validity date", details: "An approval is usually valid for up to 2 years or until the passport expires, whichever is first.", due_in_days: 5}
+  - {title: "After you arrive, check your I-94", details: "The I-94 date is the day you must leave. A visa waiver stay generally cannot be extended.", due_in_days: 30}

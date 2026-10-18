@@ -1,0 +1,19 @@
+id: marriage_green_card
+title: Green card through marriage to a US citizen
+topic: green_card
+description: If you are married to a US citizen and live in the US, you can often file the petition and the green card application together. Cases vary a lot, so consider an attorney.
+applies_to: [H-1B, L-1, O-1, E-3, E-2, TN, H-4, H-4 EAD, F-1, F-1 OPT, F-1 STEM OPT, F-2, L-2, J-2, E-3D, M-1, Other]
+last_verified: 2026-10-18
+sources:
+  - {name: "USCIS - Green card for family of US citizens", url: "https://www.uscis.gov/green-card/green-card-eligibility/green-card-for-immediate-relatives-of-us-citizen"}
+  - {name: "USCIS - I-485", url: "https://www.uscis.gov/i-485"}
+steps:
+  - {title: "Check your eligibility", details: "You need a valid marriage to a US citizen and generally a lawful entry. If you were ever on a J-1 or J-2 with a 2-year home-country rule, talk to an attorney first.", due_in_days: 0}
+  - {title: "Gather proof of a real marriage", details: "Marriage certificate, joint lease or mortgage, shared accounts, photos, travel together, and letters from friends.", due_in_days: 14, required_docs: ["Marriage certificate", "Joint lease or mortgage", "Joint bank or bills", "Photos together"]}
+  - {title: "Your spouse prepares Form I-864", details: "The US citizen spouse promises financial support. They need tax returns and proof of income.", due_in_days: 21, required_docs: ["I-864", "Spouse's tax returns", "Proof of income"]}
+  - {title: "Get the medical exam (Form I-693)", details: "It must be done by a USCIS-approved civil surgeon. Keep the sealed envelope closed.", due_in_days: 30}
+  - {title: "File I-130 and I-485 together", details: "You can also file a work permit (I-765) and travel permit (I-131) with them.", due_in_days: 45, required_docs: ["I-130", "I-485", "I-765 (optional)", "I-131 (optional)", "Passport photos", "Birth certificate", "Copy of I-94"]}
+  - {title: "Do not travel without advance parole", details: "Leaving the US with a pending green card application can cancel it, unless you hold a valid status that allows it or an approved travel permit.", due_in_days: 50}
+  - {title: "Go to the biometrics appointment", details: "USCIS sends a notice with a date.", due_in_days: 90}
+  - {title: "Attend the interview if asked", details: "Both spouses attend. Bring originals and your proof of marriage.", due_in_days: 240}
+  - {title: "Receive the decision and card", details: "If you have been married under 2 years at approval, you get a 2-year conditional card. See the I-751 plan.", due_in_days: 300}

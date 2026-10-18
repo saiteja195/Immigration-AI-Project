@@ -1,0 +1,16 @@
+id: b2_extension
+title: Extend your visitor stay (B-1/B-2)
+topic: visitor
+description: Ask USCIS for more time as a visitor with Form I-539. File before your I-94 date passes. You cannot work on a visitor status.
+applies_to: [B-1/B-2]
+last_verified: 2026-10-18
+sources:
+  - {name: "USCIS - I-539", url: "https://www.uscis.gov/i-539"}
+  - {name: "CBP - check your I-94", url: "https://i94.cbp.dhs.gov"}
+steps:
+  - {title: "Check your I-94 date", details: "Look up your latest I-94 online. That date, not your visa date, is how long you may stay.", due_in_days: 0}
+  - {title: "Decide if you really need more time", details: "Extensions are for a good reason, like illness or a delayed return. Leaving and re-entering is a different path.", due_in_days: 3}
+  - {title: "Gather documents", details: "Passport, I-94, proof you can pay for the extra time, your reason for staying, and proof you will leave later.", due_in_days: 7, required_docs: ["Passport", "I-94", "Proof of funds", "Reason for extension", "Return plan"]}
+  - {title: "File Form I-539 before your I-94 date", details: "USCIS suggests filing at least 45 days before the date. Check the current USCIS page for the fee and how to file.", due_in_days: 14}
+  - {title: "Keep the receipt notice", details: "Your stay is generally allowed while a timely request is pending. You still cannot work.", due_in_days: 30}
+  - {title: "Plan your departure", details: "If the request is denied, you must leave. Book flexible travel.", due_in_days: 60}

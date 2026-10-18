@@ -1,0 +1,18 @@
+id: travel_checklist
+title: Prepare for international travel
+topic: everyday
+description: Check your documents before you leave the US, so you can come back without problems. Needs differ by status, so use the list that matches yours.
+applies_to: [F-1, F-1 OPT, F-1 STEM OPT, M-1, J-1, F-2, H-1B, H-4, H-4 EAD, L-1, L-2, O-1, O-3, E-3, E-3D, E-2, TN, TD, J-2, Green Card, Green Card Pending, Conditional Green Card]
+last_verified: 2026-10-18
+sources:
+  - {name: "CBP - Travel to the US", url: "https://www.cbp.gov/travel"}
+  - {name: "State Dept - Visas", url: "https://travel.state.gov"}
+steps:
+  - {title: "Check your passport", details: "It should be valid for your whole trip. Many people renew well before it is close to expiring.", due_in_days: 0}
+  - {title: "Check your visa stamp", details: "To re-enter you usually need a valid visa stamp. If it expired, plan time for an appointment abroad. Green card holders do not need a visa.", due_in_days: 2}
+  - {title: "Students (F-1, OPT, STEM OPT)", details: "Get your I-20 signed for travel by your DSO, recently. On OPT, carry your EAD and a job letter.", due_in_days: 7, required_docs: ["I-20 with travel signature", "EAD (OPT)", "Employment letter"]}
+  - {title: "Workers and families (H-1B, L-1, O-1, H-4, and others)", details: "Carry your latest I-797, a recent employer letter and pay stubs. Dependents carry the same family papers.", due_in_days: 7, required_docs: ["I-797", "Employer letter", "Recent pay stubs", "Marriage certificate (spouses)"]}
+  - {title: "Green card pending (I-485)", details: "Do not leave without an approved advance parole travel document, unless an attorney confirms you hold a status that protects you.", due_in_days: 7}
+  - {title: "Green card holders", details: "Carry your card. A trip of 6 months or more can cause questions, and a year or more can put your status at risk.", due_in_days: 7}
+  - {title: "Check how long you will be away", details: "Plan around any open applications, such as extensions, and any deadlines in this app.", due_in_days: 10}
+  - {title: "After you return, check your I-94", details: "Look up the new I-94 online and update your profile dates.", due_in_days: 30}

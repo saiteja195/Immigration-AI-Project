@@ -13,7 +13,7 @@ def login(client, user=USER):
 def test_all_templates_are_valid():
     visas = set(visa_codes())
     workflows = load_all()
-    assert len(workflows) >= 8
+    assert len(workflows) >= 19
     for wf in workflows.values():
         assert wf.steps and wf.sources, wf.id
         assert set(wf.applies_to) <= visas, wf.id
@@ -77,3 +77,16 @@ def test_cannot_touch_other_users_tasks(client):
     assert client.patch(f"/api/tasks/{tid}", json={"done": True}).status_code == 404
     assert client.delete(f"/api/goals/{gid}").status_code == 404
     assert client.get("/api/tasks").json() == []
+
+
+def test_every_status_has_at_least_one_plan():
+    covered = {code for wf in load_all().values() for code in wf.applies_to}
+    missing = [c for c in visa_codes() if c != "Other" and c not in covered]
+    assert missing == [], f"no plan for: {missing}"
+
+
+def test_topics_are_used_and_titles_unique():
+    wfs = load_all().values()
+    assert {w.topic for w in wfs} == {"work", "student", "family", "visitor", "green_card", "everyday"}
+    titles = [w.title for w in wfs]
+    assert len(titles) == len(set(titles))

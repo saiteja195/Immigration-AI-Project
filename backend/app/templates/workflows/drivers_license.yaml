@@ -1,7 +1,8 @@
 id: drivers_license
 title: Get a US driver's license
+topic: everyday
 description: Steps to get a state driver's license on a non-immigrant visa. Rules differ by state, so confirm each step on your state DMV site.
-applies_to: [F-1, F-1 OPT, F-1 STEM OPT, F-2, H-1B, H-4, H-4 EAD]
+applies_to: [F-1, F-1 OPT, F-1 STEM OPT, M-1, J-1, F-2, H-1B, H-4, H-4 EAD, L-1, L-2, O-1, O-3, E-3, E-3D, E-2, TN, TD, J-2, Green Card, Green Card Pending, Conditional Green Card, K-1]
 last_verified: 2026-10-16
 sources:
   - {name: "SSA - Social Security Number", url: "https://www.ssa.gov"}

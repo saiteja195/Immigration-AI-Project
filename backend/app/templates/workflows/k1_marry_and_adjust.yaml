@@ -1,0 +1,17 @@
+id: k1_marry_and_adjust
+title: "K-1: marry and apply for a green card"
+topic: green_card
+description: After you enter on a K-1 visa you must marry the US citizen who petitioned for you within 90 days, then apply for a green card. If you do not marry in time, you must leave.
+applies_to: [K-1]
+last_verified: 2026-10-18
+sources:
+  - {name: "USCIS - Fiancé(e) visas", url: "https://www.uscis.gov/family/family-of-us-citizens/visas-for-fiancees-of-us-citizens"}
+  - {name: "USCIS - I-485", url: "https://www.uscis.gov/i-485"}
+steps:
+  - {title: "Count 90 days from your entry date", details: "Check your I-94 date. You must marry the petitioner inside that time, and you cannot marry someone else on this visa.", due_in_days: 0}
+  - {title: "Marry and get the marriage certificate", details: "Order a certified copy. You will need it for the green card application.", due_in_days: 60, required_docs: ["Marriage certificate"]}
+  - {title: "Your spouse prepares Form I-864", details: "The US citizen spouse promises financial support. They need tax returns and proof of income.", due_in_days: 65, required_docs: ["I-864", "Spouse's tax returns", "Proof of income"]}
+  - {title: "Get the medical exam (Form I-693)", details: "It must be done by a USCIS-approved civil surgeon, or use the one from your visa process if USCIS accepts it.", due_in_days: 70}
+  - {title: "File Form I-485, with I-765 and I-131", details: "Include proof of the marriage and your K-1 documents. Get advance parole before leaving the US.", due_in_days: 80, required_docs: ["I-485", "I-765", "I-131", "I-693", "I-864", "Marriage certificate", "Passport photos", "I-94"]}
+  - {title: "Biometrics and interview", details: "USCIS sends notices with dates. Bring original documents.", due_in_days: 150}
+  - {title: "Receive your green card", details: "If you married less than 2 years before approval, it is a 2-year conditional card. See the I-751 plan.", due_in_days: 300}
