@@ -6,8 +6,15 @@ from app.core.db import get_db
 from app.models.profile import DependentIn, DependentOut, KeyDateOut, ProfileIn, ProfileOut
 from app.models.user import UserOut
 from app.services.keydates import collect_key_dates
+from app.services.visas import catalog
 
 router = APIRouter(tags=["profile"])
+
+
+@router.get("/visas")
+async def visa_catalog():
+    """Visa and status types the app supports (public, static)."""
+    return catalog()
 
 @router.get("/profile", response_model=ProfileOut)
 async def get_profile(user: UserOut = Depends(current_user), db=Depends(get_db)):

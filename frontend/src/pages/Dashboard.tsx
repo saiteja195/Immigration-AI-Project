@@ -7,7 +7,7 @@ import { Badge, EmptyState, Skeleton } from "@/components/ui";
 import { TaskItem } from "@/components/TaskItem";
 import { Button } from "@/components/Button";
 import { useAuth } from "@/lib/auth";
-import { useCases, useGoals, useKeyDates, useProfile, useTasks } from "@/lib/queries";
+import { useCases, useGoals, useKeyDates, useProfile, useTasks, useVisas } from "@/lib/queries";
 import { STAGE_LABEL, stageTone } from "@/components/CaseStage";
 import { daysLabel, fmtDate, greeting, tone, type Tone } from "@/lib/format";
 
@@ -22,6 +22,7 @@ export default function Dashboard() {
   const goals = useGoals();
   const tasks = useTasks();
   const cases = useCases();
+  const visas = useVisas();
   const activeCases = (cases.data ?? []).filter((c) => !c.closed).slice(0, 3);
 
   const first = user?.full_name.split(" ")[0];
@@ -32,7 +33,8 @@ export default function Dashboard() {
   const next = dates.data?.find((d) => d.days_left >= 0) ?? dates.data?.[0];
   const mine = dates.data?.filter((d) => d.owner === "me") ?? [];
   const urgent = (dates.data ?? []).filter((d) => d.days_left <= 30);
-  const primary = mine.find((d) => d.label === "I-94 expiry") ?? mine[0] ?? next;
+  const mainLabel = visas.data?.visas.find((v) => v.code === profile.data?.visa_type)?.dates[0]?.label;
+  const primary = mine.find((d) => d.label === mainLabel) ?? mine[0] ?? next;
 
   return (
     <motion.div variants={container} initial="hidden" animate="show" className="space-y-6">

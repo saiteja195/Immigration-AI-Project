@@ -1,13 +1,8 @@
 from datetime import date
 
-DATE_FIELDS = {
-    "i94_expiry": "I-94 expiry",
-    "visa_stamp_expiry": "Visa stamp expiry",
-    "passport_expiry": "Passport expiry",
-    "ead_expiry": "EAD expiry",
-    "i20_end_date": "I-20 end date",
-    "i797_expiry": "I-797 approval expiry",
-}
+from app.services.visas import DATE_LABELS
+
+DATE_FIELDS = DATE_LABELS
 
 
 async def collect_key_dates(db, user_id: str, today: date | None = None) -> list[dict]:

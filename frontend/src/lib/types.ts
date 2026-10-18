@@ -1,24 +1,21 @@
-export type VisaType =
-  | "F-1" | "F-1 OPT" | "F-1 STEM OPT" | "F-2" | "H-1B" | "H-4" | "H-4 EAD"
-  | "Green Card Pending" | "Green Card" | "Other";
+export type VisaType = string;
 
-export const VISA_TYPES: VisaType[] = [
-  "F-1", "F-1 OPT", "F-1 STEM OPT", "F-2", "H-1B", "H-4", "H-4 EAD",
-  "Green Card Pending", "Green Card", "Other",
-];
+export type DateField =
+  | "i94_expiry" | "visa_stamp_expiry" | "passport_expiry" | "ead_expiry" | "i20_end_date" | "i797_expiry"
+  | "ds2019_end_date" | "green_card_expiry" | "conditional_residence_expiry" | "advance_parole_expiry" | "esta_expiry";
+
+export interface VisaInfo {
+  code: string; category: string; name: string; description: string;
+  dates: { field: DateField; label: string }[];
+}
+export interface VisaCatalog { categories: { id: string; label: string }[]; visas: VisaInfo[] }
 
 export interface User { id: string; email: string; full_name: string }
 
-export interface Profile {
+export interface Profile extends Record<DateField, string | null> {
   visa_type: VisaType;
   country_of_citizenship: string;
   employer_or_school: string;
-  i94_expiry: string | null;
-  visa_stamp_expiry: string | null;
-  passport_expiry: string | null;
-  ead_expiry: string | null;
-  i20_end_date: string | null;
-  i797_expiry: string | null;
 }
 
 export interface Dependent {
