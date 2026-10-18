@@ -49,7 +49,7 @@ Login is locked for 15 minutes after 5 wrong passwords for the same email.
 
 ```bash
 cd backend && pytest
-cd frontend && npm run typecheck
+cd frontend && npm run typecheck && npm test
 ```
 
 This app gives general information only. It is not legal advice.
