@@ -30,3 +30,31 @@ export const api = {
   patch: <T>(path: string, body: unknown) => request<T>("PATCH", path, body),
   del: (path: string) => request<void>("DELETE", path),
 };
+
+/** POST and read a server-sent-events response, calling onEvent for each event as it arrives. */
+export async function streamEvents<T>(path: string, body: unknown, onEvent: (e: T) => void): Promise<void> {
+  const res = await fetch(`/api${path}`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok || !res.body) {
+    const data = await res.json().catch(() => null);
+    throw new ApiError(res.status, typeof data?.detail === "string" ? data.detail : "Something went wrong.");
+  }
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+    let end: number;
+    while ((end = buffer.indexOf("\n\n")) >= 0) {
+      const chunk = buffer.slice(0, end);
+      buffer = buffer.slice(end + 2);
+      if (chunk.startsWith("data: ")) onEvent(JSON.parse(chunk.slice(6)) as T);
+    }
+  }
+}

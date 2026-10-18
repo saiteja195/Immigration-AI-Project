@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useQueryClient } from "@tanstack/react-query";
 import { ArrowUp, CheckCircle2, ExternalLink, Info, RotateCcw, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import clsx from "clsx";
 import { Markdown } from "@/components/Markdown";
 import { PageHeader, Skeleton } from "@/components/ui";
-import { clearChat, sendChat, useChatHistory, useChatStatus } from "@/lib/queries";
-import type { ChatMessage } from "@/lib/types";
+import { clearChat, useChatHistory, useChatStatus } from "@/lib/queries";
+import { streamEvents } from "@/lib/api";
+import type { ChatEvent, ChatMessage } from "@/lib/types";
 
 const SUGGESTIONS = [
   "What should I do before my EAD expires?",
@@ -24,7 +25,12 @@ function Bubble({ m }: { m: ChatMessage }) {
     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }} className={clsx("flex gap-3", mine && "justify-end")}>
       {!mine && <span className="mt-1 grid size-8 shrink-0 place-items-center rounded-full bg-accent-soft text-accent"><Sparkles className="size-4" /></span>}
       <div className={clsx("max-w-[85%] text-sm leading-relaxed", mine ? "rounded-2xl rounded-br-md bg-accent px-4 py-2.5 text-accent-fg" : "min-w-0 flex-1 pt-1")}>
-        {mine ? <p className="whitespace-pre-wrap">{m.content}</p> : <Markdown>{m.content}</Markdown>}
+        {mine ? <p className="whitespace-pre-wrap">{m.content}</p> : m.content ? <Markdown>{m.content}</Markdown> : m.streaming ? (
+          <p className="flex items-center gap-2 text-muted" aria-label={m.status ?? "Assistant is typing"}>
+            {m.status ? <span>{m.status}</span> : <span className="flex gap-1.5"><i className="dot" /><i className="dot" style={{ animationDelay: "0.15s" }} /><i className="dot" style={{ animationDelay: "0.3s" }} /></span>}
+          </p>
+        ) : null}
+        {m.streaming && !!m.content && m.status && <p className="mt-2 text-xs text-muted">{m.status}</p>}
         {!!m.actions?.length && (
           <div className="mt-3 flex flex-wrap gap-2">
             {m.actions.map((a, i) => (
@@ -59,24 +65,33 @@ export default function Chat() {
   useEffect(() => {
     if (history.data && !loaded.current) { loaded.current = true; setMessages(history.data); }
   }, [history.data]);
-  useEffect(() => { bottom.current?.scrollIntoView({ behavior: "smooth", block: "end" }); }, [messages, busy]);
+  useEffect(() => { bottom.current?.scrollIntoView({ behavior: busy ? "auto" : "smooth", block: "end" }); }, [messages, busy]);
 
   async function send(text: string) {
     const content = text.trim();
     if (!content || busy) return;
     setInput("");
     setBusy(true);
-    setMessages((m) => [...m, { role: "user", content }]);
+    setMessages((m) => [...m, { role: "user", content }, { role: "assistant", content: "", streaming: true }]);
+    const patch = (fn: (m: ChatMessage) => ChatMessage) =>
+      setMessages((all) => all.map((m, i) => (i === all.length - 1 ? fn(m) : m)));
     try {
-      const r = await sendChat(content);
-      setMessages((m) => [...m, { role: "assistant", content: r.reply, citations: r.citations, actions: r.actions }]);
-      if (r.actions.length) {
-        qc.invalidateQueries({ queryKey: ["goals"] });
-        qc.invalidateQueries({ queryKey: ["tasks"] });
-        toast.success(`Created ${r.actions.length} ${r.actions.length === 1 ? "item" : "items"} for you`);
-      }
+      await streamEvents<ChatEvent>("/chat/stream", { message: content }, (ev) => {
+        if (ev.type === "text") patch((m) => ({ ...m, content: m.content + ev.delta, status: undefined }));
+        else if (ev.type === "status") patch((m) => ({ ...m, status: ev.text }));
+        else if (ev.type === "reset") patch((m) => ({ ...m, content: "" }));
+        else if (ev.type === "error") throw new Error(ev.message);
+        else if (ev.type === "done") {
+          patch(() => ({ role: "assistant", content: ev.reply, citations: ev.citations, actions: ev.actions }));
+          if (ev.actions.length) {
+            qc.invalidateQueries({ queryKey: ["goals"] });
+            qc.invalidateQueries({ queryKey: ["tasks"] });
+            toast.success(`Created ${ev.actions.length} ${ev.actions.length === 1 ? "item" : "items"} for you`);
+          }
+        }
+      });
     } catch (e) {
-      setMessages((m) => m.slice(0, -1));
+      setMessages((m) => m.slice(0, -2));
       setInput(content);
       toast.error(e instanceof Error ? e.message : "Could not send your message.");
     } finally {
@@ -132,14 +147,6 @@ export default function Chat() {
         ) : (
           messages.map((m, i) => <Bubble key={i} m={m} />)
         )}
-        <AnimatePresence>
-          {busy && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex items-center gap-3" aria-label="Assistant is typing">
-              <span className="grid size-8 shrink-0 place-items-center rounded-full bg-accent-soft text-accent"><Sparkles className="size-4" /></span>
-              <span className="flex gap-1.5"><i className="dot" /><i className="dot" style={{ animationDelay: "0.15s" }} /><i className="dot" style={{ animationDelay: "0.3s" }} /></span>
-            </motion.div>
-          )}
-        </AnimatePresence>
         <div ref={bottom} />
       </div>
 
