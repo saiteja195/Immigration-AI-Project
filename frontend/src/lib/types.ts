@@ -43,7 +43,7 @@ export interface Task {
 
 export interface Citation { title: string; url: string }
 export interface ChatAction { type: "plan" | "task"; title: string }
-export interface ChatMessage { role: "user" | "assistant"; content: string; citations?: Citation[]; actions?: ChatAction[] }
+export interface ChatMessage { role: "user" | "assistant"; content: string; citations?: Citation[]; actions?: ChatAction[]; streaming?: boolean; status?: string }
 export interface ChatReply { reply: string; citations: Citation[]; actions: ChatAction[] }
 
 export interface AppNotification { id: string; kind: string; title: string; body: string; link: string; tone: "danger" | "warn" | "ok"; created: string; read: boolean }
@@ -60,3 +60,9 @@ export interface Case {
   closed: boolean; history: CaseHistory[];
 }
 export type NewCase = Omit<Case, "id" | "closed" | "history">;
+export type ChatEvent =
+  | { type: "text"; delta: string }
+  | { type: "status"; text: string }
+  | { type: "reset" }
+  | { type: "done"; reply: string; citations: Citation[]; actions: ChatAction[] }
+  | { type: "error"; message: string };
