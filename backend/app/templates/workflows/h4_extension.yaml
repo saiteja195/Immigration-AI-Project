@@ -1,0 +1,16 @@
+id: h4_extension
+title: Extend H-4 status and H-4 EAD
+topic: family
+description: H-4 family members extend their status with Form I-539, usually together with the H-1B spouse's extension. An H-4 EAD can be renewed at the same time.
+applies_to: [H-4, H-4 EAD]
+last_verified: 2026-10-18
+sources:
+  - {name: "USCIS - I-539", url: "https://www.uscis.gov/i-539"}
+  - {name: "USCIS - I-765", url: "https://www.uscis.gov/i-765"}
+steps:
+  - {title: "Check your H-4 and EAD dates", details: "Add them to your profile so reminders work.", due_in_days: 0}
+  - {title: "Plan the timing with your spouse's employer", details: "Ask whether they will file your I-539 together with the H-1B extension. It is often easier to do both at the same time.", due_in_days: 7}
+  - {title: "Gather documents", details: "Marriage certificate, your passport and I-94, your spouse's latest I-797 and recent pay stubs, and your current EAD.", due_in_days: 21, required_docs: ["Marriage certificate", "Passport", "I-94", "Spouse's I-797", "Spouse's pay stubs", "Current EAD"]}
+  - {title: "File Form I-539 (and I-765 for the EAD)", details: "USCIS allows the EAD renewal to be filed with the extension. Check the current fee and form on USCIS.", due_in_days: 45}
+  - {title: "Keep the receipt notices", details: "Track both cases. You may need your EAD in hand before you can keep working.", due_in_days: 60}
+  - {title: "Save the approvals and update dates", details: "Update the I-94 and EAD dates in your profile.", due_in_days: 180}

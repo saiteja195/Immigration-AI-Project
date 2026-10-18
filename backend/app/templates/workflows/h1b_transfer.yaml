@@ -1,0 +1,17 @@
+id: h1b_transfer
+title: Change employers on H-1B
+topic: work
+description: A new employer files a petition (Form I-129) for you. In many cases you can start the new job once it is filed, but only if your status and work permission are valid. Check with the new employer's attorney.
+applies_to: [H-1B]
+last_verified: 2026-10-18
+sources:
+  - {name: "USCIS - H-1B portability", url: "https://www.uscis.gov/working-in-the-united-states/h-1b-specialty-occupations"}
+  - {name: "USCIS - I-129", url: "https://www.uscis.gov/i-129"}
+steps:
+  - {title: "Get a written offer and confirm sponsorship", details: "Ask the new employer to file an H-1B transfer and who pays the fees.", due_in_days: 0}
+  - {title: "Send documents to the new employer's attorney", details: "Passport, I-94, all I-797s, degree and transcripts, recent pay stubs and your résumé.", due_in_days: 7, required_docs: ["Passport", "I-94", "All I-797 notices", "Degree and transcripts", "Recent pay stubs", "Résumé"]}
+  - {title: "New employer files Form I-129", details: "Ask for the filing date and keep the receipt notice.", due_in_days: 21}
+  - {title: "Start the new job only when the attorney says it is allowed", details: "Portability generally lets you start after filing, if you are in valid status.", due_in_days: 28}
+  - {title: "Give notice to your current employer", details: "Plan your last day around the filing, not before.", due_in_days: 28}
+  - {title: "Update your records", details: "Update your I-9, address, and the app. Check your H-4 spouse and children are covered.", due_in_days: 45}
+  - {title: "Track the case", details: "Respond to any request for evidence by its deadline.", due_in_days: 60}

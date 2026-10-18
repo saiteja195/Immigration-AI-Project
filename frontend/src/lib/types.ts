@@ -26,7 +26,7 @@ export interface Dependent {
 export interface KeyDate { label: string; owner: string; due: string; days_left: number }
 
 export interface WorkflowSummary {
-  id: string; title: string; description: string; applies_to: string[];
+  id: string; title: string; topic: string; description: string; applies_to: string[];
   last_verified: string; recommended: boolean;
 }
 export interface Workflow extends WorkflowSummary {

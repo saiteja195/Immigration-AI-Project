@@ -108,7 +108,7 @@ async def run_tool(db, user_id: str, name: str, args: dict) -> tuple[str, dict |
 
     if name == "list_plans":
         return json.dumps([
-            {"id": w.id, "title": w.title, "description": w.description, "applies_to": w.applies_to}
+            {"id": w.id, "title": w.title, "topic": w.topic, "description": w.description, "applies_to": w.applies_to}
             for w in load_all().values()
         ]), None
 

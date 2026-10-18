@@ -1,0 +1,19 @@
+id: naturalization_n400
+title: Become a US citizen (N-400)
+topic: green_card
+description: Naturalization is open to many green card holders after 5 years, or 3 years if married to and living with a US citizen. You may file up to 90 days before the date you become eligible.
+applies_to: [Green Card]
+last_verified: 2026-10-18
+sources:
+  - {name: "USCIS - Citizenship and naturalization", url: "https://www.uscis.gov/citizenship"}
+  - {name: "USCIS - N-400", url: "https://www.uscis.gov/n-400"}
+steps:
+  - {title: "Check you are eligible", details: "Time as a permanent resident, time physically in the US, continuous residence, and good moral character all count. Long trips abroad can break continuous residence.", due_in_days: 0}
+  - {title: "List your trips outside the US", details: "The form asks for every trip over a set period. Collect dates from your passport and records.", due_in_days: 7}
+  - {title: "Gather documents", details: "Green card, passport, tax returns, marriage and divorce papers if any, and details of addresses and jobs.", due_in_days: 14, required_docs: ["Green card", "Passport", "Tax returns", "Address and job history", "Marriage documents (if any)"]}
+  - {title: "File Form N-400", details: "File online if you can. Check the current fee on USCIS.", due_in_days: 30}
+  - {title: "Go to the biometrics appointment", details: "USCIS sends a notice with a date.", due_in_days: 60}
+  - {title: "Study for the English and civics tests", details: "Check which civics test applies to your filing date on the USCIS site.", due_in_days: 90}
+  - {title: "Attend the interview and test", details: "Bring your green card and passport, and any documents the notice lists.", due_in_days: 200}
+  - {title: "Take the Oath of Allegiance", details: "You become a citizen at the ceremony. Return your green card.", due_in_days: 260}
+  - {title: "Apply for your US passport", details: "Also update Social Security.", due_in_days: 280}

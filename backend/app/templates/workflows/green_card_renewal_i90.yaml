@@ -1,0 +1,15 @@
+id: green_card_renewal_i90
+title: Renew your green card (I-90)
+topic: green_card
+description: A 10-year green card must be renewed with Form I-90. You can file up to 6 months before it expires.
+applies_to: [Green Card]
+last_verified: 2026-10-18
+sources:
+  - {name: "USCIS - I-90", url: "https://www.uscis.gov/i-90"}
+steps:
+  - {title: "Check the date on your card", details: "Add it to your profile as 'Green card expiry'.", due_in_days: 0}
+  - {title: "Gather documents", details: "A copy of your card and a government ID. Your passport also helps.", due_in_days: 5, required_docs: ["Copy of green card", "Government ID", "Passport"]}
+  - {title: "File Form I-90 online", details: "You can file up to 6 months before expiry. Check the current fee on USCIS.", due_in_days: 10}
+  - {title: "Keep the receipt notice", details: "It may serve as temporary proof of status for a limited time. Read the notice for how long.", due_in_days: 20}
+  - {title: "Go to the biometrics appointment", details: "USCIS sends a notice with a date.", due_in_days: 45}
+  - {title: "Receive your new card", details: "Update your profile with the new expiry date. Check travel plans against the receipt notice while waiting.", due_in_days: 150}

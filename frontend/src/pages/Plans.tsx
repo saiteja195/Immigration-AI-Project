@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, BadgeCheck, Briefcase, Car, ExternalLink, FileText, GraduationCap, IdCard, Plane, Sparkles, type LucideIcon } from "lucide-react";
+import { ArrowRight, ArrowLeftRight, BadgeCheck, Briefcase, Car, ExternalLink, FileText, Flag, GraduationCap, Heart, IdCard, Luggage, Plane, Search, Sparkles, Users, type LucideIcon } from "lucide-react";
+import clsx from "clsx";
 import { toast } from "sonner";
 import { Badge, Modal, PageHeader, Skeleton } from "@/components/ui";
 import { Button } from "@/components/Button";
@@ -12,7 +13,21 @@ import { format } from "date-fns";
 const ICONS: Record<string, LucideIcon> = {
   drivers_license: Car, ssn: IdCard, f1_opt: GraduationCap, stem_opt: GraduationCap,
   f1_to_h1b: Briefcase, h1b_extension: Briefcase, h4_ead: FileText, h1b_visa_stamping: Plane,
+  b2_extension: Plane, esta_application: Plane, marriage_green_card: Heart, employment_green_card: Briefcase,
+  remove_conditions_i751: Heart, green_card_renewal_i90: IdCard, naturalization_n400: Flag, k1_marry_and_adjust: Heart,
+  h1b_transfer: ArrowLeftRight, h4_extension: Users, travel_checklist: Luggage,
 };
+
+const TOPICS = [
+  { id: "all", label: "All" },
+  { id: "foryou", label: "For you" },
+  { id: "work", label: "Work" },
+  { id: "student", label: "Student" },
+  { id: "family", label: "Spouse and family" },
+  { id: "visitor", label: "Visitor" },
+  { id: "green_card", label: "Green card and citizenship" },
+  { id: "everyday", label: "Everyday life" },
+];
 
 export default function Plans() {
   const navigate = useNavigate();
@@ -20,12 +35,18 @@ export default function Plans() {
   const goals = useGoals();
   const create = useCreateGoal();
   const [selected, setSelected] = useState<string | null>(null);
+  const [topic, setTopic] = useState("all");
+  const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
   const [start, setStart] = useState(format(new Date(), "yyyy-MM-dd"));
   const detail = useWorkflow(selected);
 
   const started = new Set(goals.data?.map((g) => g.workflow_id));
-  const list = [...(workflows.data ?? [])].sort((a, b) => Number(b.recommended) - Number(a.recommended));
+  const q = query.trim().toLowerCase();
+  const list = [...(workflows.data ?? [])]
+    .filter((w) => topic === "all" || (topic === "foryou" ? w.recommended : w.topic === topic))
+    .filter((w) => !q || `${w.title} ${w.description}`.toLowerCase().includes(q))
+    .sort((a, b) => Number(b.recommended) - Number(a.recommended));
 
   function pick(id: string) { setSelected(id); setOpen(true); }
 
@@ -39,10 +60,25 @@ export default function Plans() {
   return (
     <div>
       <PageHeader title="Plans" subtitle="Choose a goal and we'll turn it into a dated checklist." />
+      <div className="mb-5 space-y-3">
+        <div className="relative">
+          <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted" />
+          <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search plans, e.g. green card, OPT, travel" aria-label="Search plans" className="h-11 w-full rounded-xl border border-line bg-surface pl-10 pr-3 text-sm outline-none transition-[border-color,box-shadow] placeholder:text-muted/70 focus:border-accent focus:ring-4 focus:ring-accent-soft" />
+        </div>
+        <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0" role="tablist" aria-label="Plan topics">
+          {TOPICS.map((t) => (
+            <button key={t.id} role="tab" aria-selected={topic === t.id} onClick={() => setTopic(t.id)} className={clsx("shrink-0 cursor-pointer rounded-full border px-3.5 py-1.5 text-sm transition-colors", topic === t.id ? "border-accent bg-accent-soft text-accent" : "border-line text-muted hover:text-fg")}>
+              {t.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {workflows.isLoading ? (
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{[0, 1, 2, 3].map((i) => <Skeleton key={i} className="h-40" />)}</div>
       ) : (
         <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.05 } } }} className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {list.length === 0 && <p className="col-span-full py-10 text-center text-sm text-muted">No plans match. Try another topic or search.</p>}
           {list.map((w) => {
             const Icon = ICONS[w.id] ?? FileText;
             return (

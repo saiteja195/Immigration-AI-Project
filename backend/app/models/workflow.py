@@ -1,4 +1,5 @@
 from datetime import date
+from typing import Literal
 
 from pydantic import BaseModel, Field
 
@@ -15,9 +16,13 @@ class Step(BaseModel):
     required_docs: list[str] = []
 
 
+TOPICS = ["work", "student", "family", "visitor", "green_card", "everyday"]
+
+
 class Workflow(BaseModel):
     id: str
     title: str
+    topic: Literal["work", "student", "family", "visitor", "green_card", "everyday"]
     description: str
     applies_to: list[str]
     last_verified: date
@@ -28,6 +33,7 @@ class Workflow(BaseModel):
 class WorkflowSummary(BaseModel):
     id: str
     title: str
+    topic: str
     description: str
     applies_to: list[str]
     last_verified: date

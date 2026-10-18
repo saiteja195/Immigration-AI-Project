@@ -1,0 +1,16 @@
+id: remove_conditions_i751
+title: Remove conditions on your green card (I-751)
+topic: green_card
+description: A 2-year conditional green card must be converted into a 10-year card by filing Form I-751 in the 90 days before it expires. Missing this window can cost you your status.
+applies_to: [Conditional Green Card]
+last_verified: 2026-10-18
+sources:
+  - {name: "USCIS - I-751", url: "https://www.uscis.gov/i-751"}
+steps:
+  - {title: "Find your card's expiry date", details: "Add it to your profile as 'Conditional residence ends'. Your 90-day filing window opens 90 days before it.", due_in_days: 0}
+  - {title: "Gather proof the marriage is real", details: "Joint accounts, lease or mortgage, insurance, taxes, photos, and children's records if any.", due_in_days: 7, required_docs: ["Joint tax returns", "Joint lease or mortgage", "Joint bank or insurance", "Photos over time", "Copy of green card"]}
+  - {title: "File Form I-751 jointly with your spouse", details: "File inside the 90-day window and not earlier. If you are divorced or there was abuse, a waiver exists. Talk to an attorney.", due_in_days: 14}
+  - {title: "Keep the receipt notice", details: "The notice can serve as proof of your status while the case is pending. Check USCIS for how long it is valid.", due_in_days: 30}
+  - {title: "Go to the biometrics appointment", details: "USCIS sends a notice with a date.", due_in_days: 60}
+  - {title: "Attend an interview if asked", details: "Not everyone is called.", due_in_days: 240}
+  - {title: "Receive your 10-year card", details: "Update your profile with the new expiry date.", due_in_days: 300}

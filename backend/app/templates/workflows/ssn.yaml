@@ -1,7 +1,8 @@
 id: ssn
 title: Apply for a Social Security Number
+topic: everyday
 description: Only people with work authorization can get an SSN. F-1 students need a job offer or on-campus work. H-4 without an EAD is usually not eligible.
-applies_to: [F-1, F-1 OPT, F-1 STEM OPT, H-1B, H-4 EAD]
+applies_to: [F-1, F-1 OPT, F-1 STEM OPT, J-1, H-1B, H-4 EAD, L-1, L-2, O-1, E-3, E-3D, E-2, TN, J-2, Green Card, Green Card Pending, Conditional Green Card, K-1]
 last_verified: 2026-10-16
 sources:
   - {name: "SSA - Social Security Number", url: "https://www.ssa.gov"}
