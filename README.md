@@ -23,6 +23,14 @@ cd backend && pip install -r requirements.txt && uvicorn app.main:app --reload
 cd frontend && npm install && npm run dev      # http://localhost:5173
 ```
 
+## Demo data (development only)
+
+```bash
+docker compose exec api python -m scripts.seed_demo     # or: cd backend && python -m scripts.seed_demo
+```
+
+Creates `demo@example.com` / `demo-password-123` with a sample H-1B profile, a spouse, plans, tasks and two cases. Add `--reset` to recreate it. Never run this on a public server.
+
 ## Settings (`backend/.env`)
 
 | Name | What it does |
