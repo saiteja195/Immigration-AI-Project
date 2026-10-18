@@ -11,3 +11,6 @@ mongomock-motor==0.0.34
 PyYAML==6.0.2
 anthropic==1.15.0
 APScheduler==3.11.0
+cryptography==44.0.0
+pypdf==5.1.0
+python-multipart==0.0.20

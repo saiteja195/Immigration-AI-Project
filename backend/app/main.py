@@ -5,7 +5,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth, cases, chat, health, profile, reminders, tasks
+from app.api import auth, cases, chat, documents, health, profile, reminders, tasks
 from app.core.config import settings
 from app.core.db import close_client, get_db
 from app.services.mailer import get_mailer
@@ -48,3 +48,4 @@ app.include_router(tasks.router, prefix="/api")
 app.include_router(chat.router, prefix="/api")
 app.include_router(reminders.router, prefix="/api")
 app.include_router(cases.router, prefix="/api")
+app.include_router(documents.router, prefix="/api")

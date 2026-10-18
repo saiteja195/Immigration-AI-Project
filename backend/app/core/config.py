@@ -25,6 +25,9 @@ class Settings(BaseSettings):
     allow_signups: bool = True  # when false, only the very first account can be created
     login_max_attempts: int = 5  # wrong passwords allowed per email in the window
     login_window_minutes: int = 15
+    encryption_key: str = ""  # Fernet key. The document vault is off until this is set
+    max_upload_mb: int = 5
+    max_documents_per_user: int = 30
     cors_origins: list[str] = ["http://localhost:5173"]
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")

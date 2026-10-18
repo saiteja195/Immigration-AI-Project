@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { api, ApiError } from "./api";
-import type { VisaCatalog, Case, NewCase, NotificationList, ReminderPrefs, ChatMessage, ChatReply, Dependent, Goal, KeyDate, Profile, Task, Workflow, WorkflowSummary } from "./types";
+import type { DocKind, VaultDoc, VaultStatus, VisaCatalog, Case, NewCase, NotificationList, ReminderPrefs, ChatMessage, ChatReply, Dependent, Goal, KeyDate, Profile, Task, Workflow, WorkflowSummary } from "./types";
 
 export const useProfile = () =>
   useQuery({
@@ -177,3 +177,38 @@ export const useUpdateCase = () =>
 export const useDeleteCase = () => useCaseMutation((id: string) => api.del(`/cases/${id}`));
 
 export const useVisas = () => useQuery({ queryKey: ["visas"], queryFn: () => api.get<VisaCatalog>("/visas"), staleTime: Infinity });
+
+export const useVaultStatus = () => useQuery({ queryKey: ["vault-status"], queryFn: () => api.get<VaultStatus>("/documents/status") });
+export const useDocuments = () => useQuery({ queryKey: ["documents"], queryFn: () => api.get<VaultDoc[]>("/documents") });
+
+export function useUploadDocument() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ file, kind }: { file: File; kind: DocKind }) => {
+      const form = new FormData();
+      form.append("file", file);
+      form.append("kind", kind);
+      return api.upload<VaultDoc>("/documents", form);
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["documents"] }),
+    onError,
+  });
+}
+
+export function useDeleteDocument() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => api.del(`/documents/${id}`),
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["documents"] }); toast.success("Document deleted"); },
+    onError,
+  });
+}
+
+export function useVaultSettings() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (assistant_access: boolean) => api.put<VaultStatus>("/documents/settings", { assistant_access }),
+    onSuccess: (d) => qc.setQueryData(["vault-status"], d),
+    onError,
+  });
+}

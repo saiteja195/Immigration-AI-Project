@@ -66,3 +66,14 @@ export type ChatEvent =
   | { type: "reset" }
   | { type: "done"; reply: string; citations: Citation[]; actions: ChatAction[] }
   | { type: "error"; message: string };
+
+
+export type DocKind = "passport" | "visa" | "i94" | "i797" | "i20" | "ead" | "marriage" | "degree" | "employment" | "tax" | "other";
+export const DOC_KINDS: { id: DocKind; label: string }[] = [
+  { id: "passport", label: "Passport" }, { id: "visa", label: "Visa stamp" }, { id: "i94", label: "I-94" },
+  { id: "i797", label: "I-797 notice" }, { id: "i20", label: "I-20 / DS-2019" }, { id: "ead", label: "EAD card" },
+  { id: "marriage", label: "Marriage certificate" }, { id: "degree", label: "Degree or transcript" },
+  { id: "employment", label: "Employment letter" }, { id: "tax", label: "Tax return" }, { id: "other", label: "Other" },
+];
+export interface VaultDoc { id: string; name: string; kind: DocKind; content_type: string; size: number; created: string; has_text: boolean }
+export interface VaultStatus { enabled: boolean; assistant_access: boolean; max_upload_mb: number }

@@ -1,4 +1,4 @@
-import { Compass, FolderOpen, LayoutDashboard, ListChecks, Sparkles, UserRound, type LucideIcon } from "lucide-react";
+import { Archive, Compass, FolderOpen, LayoutDashboard, ListChecks, Sparkles, UserRound, type LucideIcon } from "lucide-react";
 
 export interface NavItem { to: string; label: string; icon: LucideIcon }
 
@@ -7,6 +7,7 @@ export const NAV: NavItem[] = [
   { to: "/tasks", label: "Tasks", icon: ListChecks },
   { to: "/cases", label: "Cases", icon: FolderOpen },
   { to: "/plans", label: "Plans", icon: Compass },
+  { to: "/documents", label: "Docs", icon: Archive },
   { to: "/chat", label: "Assistant", icon: Sparkles },
   { to: "/profile", label: "Profile", icon: UserRound },
 ];
