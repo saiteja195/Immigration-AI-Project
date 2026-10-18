@@ -29,9 +29,12 @@ cd frontend && npm install && npm run dev      # http://localhost:5173
 |---|---|
 | `MONGO_URL`, `MONGO_DB` | MongoDB connection |
 | `JWT_SECRET` | Signs login cookies. Set a long random value |
+| `ALLOW_SIGNUPS` | Set `false` to close public signups. The very first account can still be created |
 | `COOKIE_SECURE` | Set `true` when served over HTTPS |
 | `ANTHROPIC_API_KEY` | Turns on the assistant. Chat is disabled without it |
 | `ANTHROPIC_MODEL` | Model used by the assistant |
+
+Login is locked for 15 minutes after 5 wrong passwords for the same email.
 
 ## Tests
 

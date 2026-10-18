@@ -3,10 +3,11 @@ import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { AuthLayout } from "@/layout/AuthLayout";
 import { Field } from "@/components/Field";
 import { Button } from "@/components/Button";
-import { useAuth } from "@/lib/auth";
+import { useAuth, useSignupsOpen } from "@/lib/auth";
 
 export default function Login() {
   const { user, login } = useAuth();
+  const signups = useSignupsOpen();
   const navigate = useNavigate();
   const from = (useLocation().state as { from?: string } | null)?.from ?? "/";
   const [email, setEmail] = useState("");
@@ -38,9 +39,11 @@ export default function Login() {
         {error && <p role="alert" className="rounded-lg bg-danger/10 px-3 py-2 text-sm text-danger">{error}</p>}
         <Button type="submit" loading={busy} className="w-full">Sign in</Button>
       </form>
-      <p className="mt-6 text-center text-sm text-muted">
-        New here? <Link to="/signup" className="font-medium text-accent hover:underline">Create an account</Link>
-      </p>
+      {signups.data?.signups_open !== false && (
+        <p className="mt-6 text-center text-sm text-muted">
+          New here? <Link to="/signup" className="font-medium text-accent hover:underline">Create an account</Link>
+        </p>
+      )}
     </AuthLayout>
   );
 }
