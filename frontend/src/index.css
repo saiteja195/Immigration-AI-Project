@@ -106,3 +106,8 @@ body {
 @keyframes bounce-dot { 0%, 80%, 100% { transform: translateY(0); opacity: 0.4; } 40% { transform: translateY(-4px); opacity: 1; } }
 .dot { display: inline-block; width: 6px; height: 6px; border-radius: 9999px; background: var(--muted); animation: bounce-dot 1.2s infinite; }
 @media (prefers-reduced-motion: reduce) { .dot { animation: none; } }
+
+/* Page change: fade and slide in. Only a "from" keyframe, so the resting style is the real style. */
+@keyframes page-in { from { opacity: 0; transform: translateY(10px); } }
+.page-enter { animation: page-in 0.22s ease-out; }
+@media (prefers-reduced-motion: reduce) { .page-enter { animation: none; } }
