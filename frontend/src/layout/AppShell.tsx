@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import clsx from "clsx";
 import { Logo } from "@/components/Logo";
 import { AccountMenu } from "@/components/AccountMenu";
@@ -59,17 +59,10 @@ export function AppShell() {
       </header>
 
       <main className="mx-auto w-full max-w-6xl px-4 pb-28 pt-6 sm:px-8 lg:pb-12 lg:pt-10">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={pathname}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.18 }}
-          >
-            <Outlet />
-          </motion.div>
-        </AnimatePresence>
+        {/* Enter-only CSS animation: if it ever fails to run, the page is still visible. */}
+        <div key={pathname} className="page-enter">
+          <Outlet />
+        </div>
       </main>
 
       {/* Mobile bottom tabs */}
